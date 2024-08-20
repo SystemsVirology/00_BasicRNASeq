@@ -3,7 +3,7 @@
     "path": "~/Desktop/Course/00_BasicRNASeq/about.Rmd",
     "project_path": "about.Rmd",
     "type": "r_markdown",
-    "hash": "212724988",
+    "hash": "2851655715",
     "contents": "",
     "dirty": false,
     "created": 1724155543989.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "28,0",
+        "cursorPosition": "24,111",
         "scrollLine": "8"
     },
     "folds": "",
-    "lastKnownWriteTime": 1724156191,
+    "lastKnownWriteTime": 1724158138,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1724156192000,
+    "last_content_update": 1724158138901,
     "read_only": false,
     "read_only_alternatives": []
 }

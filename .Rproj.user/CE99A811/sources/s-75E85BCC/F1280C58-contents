@@ -22,7 +22,7 @@ ggplot(p$rotated, aes(x=PC1, y=PC2,color=Group)) + geom_point(size=4,shape=21,ae
   scale_fill_manual(values=c(Treated="#b50404",Control="#5dde86"))+     #Fill color of the points
   theme(axis.title = element_text(size=9,hjust = 0.5),plot.title = element_text(hjust = 0.5))+
   labs(x = "PC1, 33.43% variation",y="PC2, 26.73% variation",fill="Group",color="Group",title = "PCA Plot")
-
+#<img src="images/MiniLogo.png" style="position:absolute; top:100px; right:200px; width:200px; height:auto;" />
 ```
 
 
