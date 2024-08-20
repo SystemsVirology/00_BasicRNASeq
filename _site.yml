@@ -4,6 +4,8 @@ output_dir: "docs"
 navbar:
   title: "About the course"
   left:
+    - text: "Pre-course"
+      href: preCourse.html
     - text: "Chapters"
       menu:
         - text: "Chapter 1"
