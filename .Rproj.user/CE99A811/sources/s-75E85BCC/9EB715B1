@@ -3,7 +3,7 @@
     "path": "~/Desktop/Course/00_BasicRNASeq/_site.yml",
     "project_path": "_site.yml",
     "type": "yaml",
-    "hash": "2687712393",
+    "hash": "86126216",
     "contents": "",
     "dirty": false,
     "created": 1724155543779.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "16,8",
+        "cursorPosition": "15,25",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1724157366,
+    "lastKnownWriteTime": 1724157502,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1724157366324,
+    "last_content_update": 1724157502597,
     "read_only": false,
     "read_only_alternatives": []
 }
