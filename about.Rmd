@@ -3,3 +3,26 @@ title: "About This Website"
 ---
 
 More about this website.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(ggplot2)
+var <- cbind(PC = rownames(var), var)
+head(var)
+var$PC <- factor(var$PC, levels = var$PC)
+ggplot(data=var, aes(x=PC, y=Variance)) + geom_bar(stat="identity",fill="#bb9b49")+
+  theme(axis.title.x = element_blank(),plot.title = element_text(hjust = 0.5))+labs(title = "Variance captured",y="Percentage of Variance")
+
+
+ggplot(p$rotated, aes(x=PC1, y=PC2,color=Group)) + geom_point(size=4,shape=21,aes(fill=Group))+
+  scale_color_manual(values=c(Treated="#6c0202",Control="#2e6f43"))+    #Outline color of the points
+  scale_fill_manual(values=c(Treated="#b50404",Control="#5dde86"))+     #Fill color of the points
+  theme(axis.title = element_text(size=9,hjust = 0.5),plot.title = element_text(hjust = 0.5))+
+  labs(x = "PC1, 33.43% variation",y="PC2, 26.73% variation",fill="Group",color="Group",title = "PCA Plot")
+
+```
+
+

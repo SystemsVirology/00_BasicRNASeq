@@ -1,8 +1,22 @@
-name: "my-website"
+name: "0001_Basic_RNASeq"
+output_dir: "docs"
+
 navbar:
-  title: "My Website"
+  title: "About the course"
   left:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
+    - text: "Chapters"
+      menu:
+        - text: "Chapter 1"
+          href: chapter1.html
+        - text: "Chapter 2"
+          href: chapter2.html
+        - text: "Chapter3"
+          href: chapter3.html
+    - text: "Assignment"
+          
+output:
+  html_document:
+    theme: flatly
+    highlight: text
+    css: styles.css
+    code_folding: hide
