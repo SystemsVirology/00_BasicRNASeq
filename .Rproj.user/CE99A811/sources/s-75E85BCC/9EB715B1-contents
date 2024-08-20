@@ -13,6 +13,8 @@ navbar:
         - text: "Chapter3"
           href: chapter3.html
     - text: "Assignment"
+      menu:
+        - text: "Lab1"
           
 output:
   html_document:
