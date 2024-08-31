@@ -47,7 +47,7 @@ h6 {
 
 /* Links and buttons */
 a {
-    font-size: 16px; /* Adjust as needed */
+    font-size: 20px; /* Adjust as needed */
 }
 
 button {
@@ -68,88 +68,5 @@ button {
 }
 /* styles.css */
 
-/* Style for the sidebar */
-.sidebar {
-  width: 250px; /* Adjust the width as needed */
-  position: fixed; /* Keeps it fixed on the side */
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #f4f4f4; /* Background color */
-  padding: 20px; /* Padding around the content */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
-  overflow-y: auto; /* Scroll if content exceeds the viewport height */
-}
 
-/* Style for the TOC */
-#toc-container {
-  margin-top: 20px;
-}
 
-#toc-container ul {
-  list-style-type: none; /* Remove default list styling */
-  padding-left: 0;
-}
-
-#toc-container li {
-  margin-bottom: 5px; /* Space between items */
-}
-
-#toc-container a {
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Text color */
-  font-size: 16px; /* Font size */
-}
-
-#toc-container a:hover {
-  color: #007bff; /* Hover color */
-}
-
-/* Ensure content does not overlap the sidebar */
-.content {
-  margin-left: 250px; /* Same width as the sidebar */
-  padding: 20px; /* Padding around the content */
-}
-
-/* Style for the sidebar */
-.sidebar {
-  width: 250px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #f4f4f4;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-}
-
-/* Style for the TOC */
-#toc-container {
-  margin-top: 20px;
-}
-
-#toc-container ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-#toc-container li {
-  margin-bottom: 5px;
-}
-
-#toc-container a {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-}
-
-#toc-container a:hover {
-  color: #007bff;
-}
-
-/* Ensure content does not overlap the sidebar */
-.content {
-  margin-left: 250px;
-  padding: 20px;
-}

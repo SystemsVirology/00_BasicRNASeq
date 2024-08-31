@@ -1,5 +1,5 @@
 ---
-title: "My Website"
+title: "Transcriptomics Analysis using R"
 output:
   html_document:
     toc: true
@@ -20,7 +20,7 @@ At each stage of the course, students will build upon the previous step, moving 
 
 By the end of the course, participants will have systematically solved the research problem, identifying key molecular mechanisms altered by SARS-CoV-2 infection. They will have developed detailed visualizations, such as heatmaps, volcano plots and pathway diagrams, and interpreted their findings to draw meaningful biological conclusions. This step-by-step approach, combined with R training, ensures that students leave the course with both the knowledge and hands-on experience needed to independently tackle similar research problems in their future work.
 
-## Course Objectives
+# Course Objectives
 
 By the end of this course, participants will be able to:
 
@@ -30,3 +30,52 @@ By the end of this course, participants will be able to:
 4. **Interpret and visualize data** using advanced bioinformatics tools and methods.
 5. **Apply functional enrichment analysis** to uncover biological pathways and mechanisms affected in disease states, with a specific focus on COVID-19.
 6. **Present and communicate findings** effectively, utilizing visualization techniques to support biological interpretations.
+
+# Course Structure
+
+## Module 1: Introduction to Transcriptomics
+
+**What is Transcriptomics?**: 
+Overview of transcriptomics and its role in understanding gene expression.The importance of transcriptomics in disease research, with a focus on COVID-19. Types of transcriptomics data and technologies used to generate it. The Power of Transcriptomics in Disease Mechanism Discovery Case studies highlighting transcriptomics' role in identifying disease mechanisms. The relevance of transcriptomics in COVID-19 research.
+
+## Module 2: Introduction to the Research Problem
+
+**Defining the Research Problem**: 
+Understanding the molecular changes in response to COVID-19. Overview of the specific research question to be addressed in the course.
+
+**Study Design and Data Overview**: 
+Explanation of the study design, including sample collection, experimental conditions, and data acquisition. Introduction to the dataset: structure, content, and format. Discussion on the challenges and limitations of the dataset.
+
+## Module 3: Introduction to R Programming
+
+**Getting Started with R**: 
+Introduction to R and RStudio environment. Basic R syntax and commands. Data types, variables, and operators in R. Importing and managing data in R.
+
+**R for Bioinformatics**: 
+Introduction to Bioconductor and other R packages used for transcriptomics analysis. Hands-on exercises to solidify R basics in the context of biological data.
+
+## Module 4: Transcriptomics Data Analysis Pipeline
+
+**Preprocessing and Quality Control**: 
+Data normalization techniques. Performing and interpreting Principal Component Analysis (PCA) for sample distribution estimation.
+
+**Differential Expression Analysis**: 
+Introduction to differential gene expression analysis. Implementing DESeq2/edgeR in R to identify differentially expressed genes. Interpretation of results: identifying significant genes and understanding fold changes.
+
+**Functional Enrichment Analysis**: 
+Overview of gene ontology (GO) and pathway analysis. Conducting functional enrichment analysis to uncover biological pathways. Tools and packages in R for functional analysis.
+
+## Module 5: Data Visualization and Interpretation
+**Visualizing Results**: 
+Creating publication-quality plots and visualizations in R (e.g., volcano plots, heatmaps). Customizing and refining visual outputs for clarity and impact.
+
+**Interpretation and Biological Insight**: 
+Integrating analysis results to draw meaningful biological conclusions. Case studies: interpreting findings in the context of COVID-19.
+
+## Module 6: Project Work and Presentation
+
+**Project Assignment**: 
+Students will apply the full analysis pipeline to a provided COVID-19 dataset. Guidance on structuring the analysis and reporting results.
+
+**Presenting Findings**: 
+Students will prepare a presentation or report detailing their analysis and findings. Peer review and feedback sessions.
