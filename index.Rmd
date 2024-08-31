@@ -1,7 +1,32 @@
 ---
-title: "Transcriptomics analysis in R"
+title: "My Website"
+output:
+  html_document:
+    toc: true
 ---
+
 
 The course website contains the syllabus and codes required for the week 40 & 41 of the bioinformatics course.
 
+<br>
 
+# Course overview
+
+This course is structured around a central research problem: identifying the molecular mechanisms caused by SARS-CoV-2 infection. From the outset, students will be presented with this real-life challenge and provided with actual RNA-seq data related to COVID-19. As the course progresses, participants will learn and apply various transcriptomics analysis techniques to solve this problem step by step. Beginning with data normalization, students will prepare and standardize the dataset, ensuring it is suitable for accurate analysis. They will then employ dimensionality reduction methods, such as Principal Component Analysis (PCA), to simplify the data and identify key patterns and variations in gene expression.
+
+Given that R is the primary tool for analysis in this course, students will also receive training in the basics of R programming. This foundational knowledge will enable them to use R-based packages effectively throughout the course. Participants will start with an introduction to R, covering essential commands, data manipulation, and an overview of key R packages used in transcriptomics analysis. As they progress, students will apply these R skills directly to their analysis, enhancing their proficiency and confidence in using R for bioinformatics.
+
+At each stage of the course, students will build upon the previous step, moving from differential expression analysis, where they will use R based tools to identify genes significantly altered by SARS-CoV-2 infection to gene-set enrichment analysis, where they will explore and interpret the broader biological pathways and processes affected by the virus. Every practical session is directly tied to solving the research problem, ensuring that students not only understand the theoretical concepts but also apply them to uncover the molecular changes associated with COVID-19.
+
+By the end of the course, participants will have systematically solved the research problem, identifying key molecular mechanisms altered by SARS-CoV-2 infection. They will have developed detailed visualizations, such as heatmaps, volcano plots and pathway diagrams, and interpreted their findings to draw meaningful biological conclusions. This step-by-step approach, combined with R training, ensures that students leave the course with both the knowledge and hands-on experience needed to independently tackle similar research problems in their future work.
+
+## Course Objectives
+
+By the end of this course, participants will be able to:
+
+1. **Understand the fundamentals of transcriptomics** and its significance in biological research.
+2. **Use R for bioinformatics** by gaining proficiency in basic R programming.
+3. **Perform downstream analysis** of RNA-seq data, including quality control, normalization, and differential expression analysis.
+4. **Interpret and visualize data** using advanced bioinformatics tools and methods.
+5. **Apply functional enrichment analysis** to uncover biological pathways and mechanisms affected in disease states, with a specific focus on COVID-19.
+6. **Present and communicate findings** effectively, utilizing visualization techniques to support biological interpretations.

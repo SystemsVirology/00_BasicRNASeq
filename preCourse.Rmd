@@ -11,5 +11,3 @@ Before the initiation of the course all the required software and packages need 
 
 ### Installation of R & R studio
 
-We use R programming language for all the downstream analysis of transcriptomics data. A detailed description how to install R & R studio on Windows can be found [here](https://teacherscollege.screenstepslive.com/a/1108074-install-r-and-rstudio-for-windows)
-

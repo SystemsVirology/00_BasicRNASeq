@@ -9,3 +9,147 @@
 .navbar-nav .dropdown-item:hover {
   background-color: #e9ecef;
 }
+p {
+    text-align: justify;
+}
+/* styles.css */
+
+/* Set default font for the body */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px; /* Base font size */
+}
+
+/* Headings styles */
+h1 {
+    font-size: 2em; /* 32px if base font size is 16px */
+}
+
+h2 {
+    font-size: 1.5em; /* 24px */
+}
+
+h3 {
+    font-size: 1.17em; /* 18.7px */
+}
+
+h4 {
+    font-size: 1em; /* 16px */
+}
+
+h5 {
+    font-size: 0.83em; /* 13.3px */
+}
+
+h6 {
+    font-size: 0.67em; /* 10.7px */
+}
+
+/* Links and buttons */
+a {
+    font-size: 16px; /* Adjust as needed */
+}
+
+button {
+    font-size: 18px; /* Adjust as needed */
+}
+
+
+/* styles.css */
+
+/* Increase font size for the top menu items */
+.navbar-nav li a {
+    font-size: 20px; /* Adjust the font size as needed */
+}
+
+/* Optional: Increase font size for the navbar brand (site title) */
+.navbar-brand {
+    font-size: 24px; /* Adjust the font size as needed */
+}
+/* styles.css */
+
+/* Style for the sidebar */
+.sidebar {
+  width: 250px; /* Adjust the width as needed */
+  position: fixed; /* Keeps it fixed on the side */
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #f4f4f4; /* Background color */
+  padding: 20px; /* Padding around the content */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  overflow-y: auto; /* Scroll if content exceeds the viewport height */
+}
+
+/* Style for the TOC */
+#toc-container {
+  margin-top: 20px;
+}
+
+#toc-container ul {
+  list-style-type: none; /* Remove default list styling */
+  padding-left: 0;
+}
+
+#toc-container li {
+  margin-bottom: 5px; /* Space between items */
+}
+
+#toc-container a {
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Text color */
+  font-size: 16px; /* Font size */
+}
+
+#toc-container a:hover {
+  color: #007bff; /* Hover color */
+}
+
+/* Ensure content does not overlap the sidebar */
+.content {
+  margin-left: 250px; /* Same width as the sidebar */
+  padding: 20px; /* Padding around the content */
+}
+
+/* Style for the sidebar */
+.sidebar {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+/* Style for the TOC */
+#toc-container {
+  margin-top: 20px;
+}
+
+#toc-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#toc-container li {
+  margin-bottom: 5px;
+}
+
+#toc-container a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+#toc-container a:hover {
+  color: #007bff;
+}
+
+/* Ensure content does not overlap the sidebar */
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
