@@ -36,12 +36,12 @@ By the end of this course, participants will be able to:
 ## Module 1: Introduction to Transcriptomics
 
 **What is Transcriptomics?**: 
-Overview of transcriptomics and its role in understanding gene expression.The importance of transcriptomics in disease research, with a focus on COVID-19. Types of transcriptomics data and technologies used to generate it. The Power of Transcriptomics in Disease Mechanism Discovery Case studies highlighting transcriptomics' role in identifying disease mechanisms. The relevance of transcriptomics in COVID-19 research.
+Overview of transcriptomics and its role in understanding gene expression.The importance of transcriptomics in everyday life. Types of transcriptomics data and technologies used to generate it. The Power of Transcriptomics in mechanistic studies highlighting its role in identifying mechanisms or processes that drive a specific biological phenomenon or disease, and specifically to uncover the detailed molecular, cellular, and physiological pathways involved, providing insights into how and why certain effects or outcomes occur.
 
 ## Module 2: Introduction to the Research Problem
 
 **Defining the Research Problem**: 
-Understanding the molecular changes in response to COVID-19. Overview of the specific research question to be addressed in the course.
+Overview of the specific research question to be addressed in the course.
 
 **Study Design and Data Overview**: 
 Explanation of the study design, including sample collection, experimental conditions, and data acquisition. Introduction to the dataset: structure, content, and format. Discussion on the challenges and limitations of the dataset.
@@ -63,19 +63,12 @@ Data normalization techniques. Performing and interpreting Principal Component A
 Introduction to differential gene expression analysis. Implementing DESeq2/edgeR in R to identify differentially expressed genes. Interpretation of results: identifying significant genes and understanding fold changes.
 
 **Functional Enrichment Analysis**: 
-Overview of gene ontology (GO) and pathway analysis. Conducting functional enrichment analysis to uncover biological pathways. Tools and packages in R for functional analysis.
+Overview of gene-set enrichment analysis. Conducting functional enrichment analysis to uncover biological pathways. Tools and packages in R for functional analysis.
 
 ## Module 5: Data Visualization and Interpretation
 **Visualizing Results**: 
 Creating publication-quality plots and visualizations in R (e.g., volcano plots, heatmaps). Customizing and refining visual outputs for clarity and impact.
 
 **Interpretation and Biological Insight**: 
-Integrating analysis results to draw meaningful biological conclusions. Case studies: interpreting findings in the context of COVID-19.
+Systematically draw meaningful biological conclusions from the results.
 
-## Module 6: Project Work and Presentation
-
-**Project Assignment**: 
-Students will apply the full analysis pipeline to a provided COVID-19 dataset. Guidance on structuring the analysis and reporting results.
-
-**Presenting Findings**: 
-Students will prepare a presentation or report detailing their analysis and findings. Peer review and feedback sessions.
