@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
@@ -222,6 +225,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -229,6 +295,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -250,7 +326,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Chapters
+    Exercises
      
     <span class="caret"></span>
   </a>
@@ -262,7 +338,7 @@ $(document).ready(function () {
       <a href="chapter2.html">Chapter 2</a>
     </li>
     <li>
-      <a href="chapter3.html">Chapter3</a>
+      <a href="chapter3.html">Chapter 3</a>
     </li>
   </ul>
 </li>
@@ -293,36 +369,14 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#course-overview" id="toc-course-overview">Course
-overview</a></li>
-<li><a href="#course-objectives" id="toc-course-objectives">Course
-Objectives</a></li>
-<li><a href="#course-structure" id="toc-course-structure">Course
-Structure</a>
-<ul>
-<li><a href="#module-1-introduction-to-transcriptomics"
-id="toc-module-1-introduction-to-transcriptomics">Module 1: Introduction
-to Transcriptomics</a></li>
-<li><a href="#module-2-introduction-to-the-research-problem"
-id="toc-module-2-introduction-to-the-research-problem">Module 2:
-Introduction to the Research Problem</a></li>
-<li><a href="#module-3-introduction-to-r-programming"
-id="toc-module-3-introduction-to-r-programming">Module 3: Introduction
-to R Programming</a></li>
-<li><a href="#module-4-transcriptomics-data-analysis-pipeline"
-id="toc-module-4-transcriptomics-data-analysis-pipeline">Module 4:
-Transcriptomics Data Analysis Pipeline</a></li>
-<li><a href="#module-5-data-visualization-and-interpretation"
-id="toc-module-5-data-visualization-and-interpretation">Module 5: Data
-Visualization and Interpretation</a></li>
-</ul></li>
-</ul>
-</div>
 
-<p>The course website contains the syllabus and codes required for the
-week 40 &amp; 41 of the bioinformatics course.</p>
+<p>Welcome to the <strong>Next generation sequencing (NGS) and
+bioinformatics 3BL008 BL00F HT2024</strong> course. This website aimed
+to provide you with comprehensive resources for mastering
+transcriptomics data analysis using R. Here, you’ll find detailed
+syllabi outlining the course structure, along with practical R code
+examples and analysis techniques essential for your learning
+journey.</p>
 <p><br></p>
 <div id="course-overview" class="section level1">
 <h1>Course overview</h1>
@@ -401,9 +455,8 @@ specifically to uncover the detailed molecular, cellular, and
 physiological pathways involved, providing insights into how and why
 certain effects or outcomes occur.</p>
 </div>
-<div id="module-2-introduction-to-the-research-problem"
-class="section level2">
-<h2>Module 2: Introduction to the Research Problem</h2>
+<div id="module-2-the-research-problem" class="section level2">
+<h2>Module 2: The Research Problem</h2>
 <p><strong>Defining the Research Problem</strong>: Overview of the
 specific research question to be addressed in the course.</p>
 <p><strong>Study Design and Data Overview</strong>: Explanation of the
@@ -411,8 +464,8 @@ study design, including sample collection, experimental conditions, and
 data acquisition. Introduction to the dataset: structure, content, and
 format. Discussion on the challenges and limitations of the dataset.</p>
 </div>
-<div id="module-3-introduction-to-r-programming" class="section level2">
-<h2>Module 3: Introduction to R Programming</h2>
+<div id="module-3-basics-of-r" class="section level2">
+<h2>Module 3: Basics of R</h2>
 <p><strong>Getting Started with R</strong>: Introduction to R and
 RStudio environment. Basic R syntax and commands. Data types, variables,
 and operators in R. Importing and managing data in R.</p>
@@ -449,6 +502,8 @@ results.</p>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -486,6 +541,35 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

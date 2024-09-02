@@ -3,10 +3,10 @@ title: "Transcriptomics Analysis using R"
 output:
   html_document:
     toc: true
+    toc_float: true
 ---
 
-
-The course website contains the syllabus and codes required for the week 40 & 41 of the bioinformatics course.
+Welcome to the **Next generation sequencing (NGS) and bioinformatics 3BL008 BL00F HT2024** course. This website aimed to provide you with comprehensive resources for mastering transcriptomics data analysis using R. Here, you’ll find detailed syllabi outlining the course structure, along with practical R code examples and analysis techniques essential for your learning journey.
 
 <br>
 
@@ -38,7 +38,7 @@ By the end of this course, participants will be able to:
 **What is Transcriptomics?**: 
 Overview of transcriptomics and its role in understanding gene expression.The importance of transcriptomics in everyday life. Types of transcriptomics data and technologies used to generate it. The Power of Transcriptomics in mechanistic studies highlighting its role in identifying mechanisms or processes that drive a specific biological phenomenon or disease, and specifically to uncover the detailed molecular, cellular, and physiological pathways involved, providing insights into how and why certain effects or outcomes occur.
 
-## Module 2: Introduction to the Research Problem
+## Module 2: The Research Problem
 
 **Defining the Research Problem**: 
 Overview of the specific research question to be addressed in the course.
@@ -46,7 +46,7 @@ Overview of the specific research question to be addressed in the course.
 **Study Design and Data Overview**: 
 Explanation of the study design, including sample collection, experimental conditions, and data acquisition. Introduction to the dataset: structure, content, and format. Discussion on the challenges and limitations of the dataset.
 
-## Module 3: Introduction to R Programming
+## Module 3: Basics of R
 
 **Getting Started with R**: 
 Introduction to R and RStudio environment. Basic R syntax and commands. Data types, variables, and operators in R. Importing and managing data in R.

@@ -1,25 +1,151 @@
 ---
-title: "Chapter1"
-author: "Anoop Ambikan"
-date: "8/20/2024"
-output: html_document
+title: "Basics of R"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: none
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+R is a powerful open-source programming language and software environment widely used for statistical computing, data analysis, and graphical visualization. Its extensive range of packages and libraries makes it a preferred tool among statisticians, data scientists, and researchers for conducting complex analyses and creating sophisticated plots. **RStudio** is an integrated development environment (IDE) designed to enhance the R programming experience. It provides a user-friendly interface that includes a console, syntax-highlighted editor, and tools for managing files, plots, and packages. RStudio offers features such as code completion, debugging tools, and project management, which streamline the process of writing and executing R code. Its supportive ecosystem also includes features for creating dynamic reports and documents using R Markdown, which is invaluable for reproducible research.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Data structures
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Data structures are organized formats for storing, managing, and accessing data efficiently in computing. They define how data is arranged and related, enabling effective data manipulation and retrieval. In R, fundamental data structures include **vectors**, which store elements of the same type in a one-dimensional format; **matrices**, which extend vectors to two dimensions, organizing data into rows and columns; **data frames**, which allow for heterogeneous data types across columns, making them ideal for tabular data; and **lists**, which provide a flexible way to hold elements of diverse types and structures. Simple variables also play a crucial role in R by holding individual pieces of data. These include **numeric variables** for numbers, **character variables** for text, **logical variables** for Boolean values, and **factor variables** for categorical data with predefined levels. Understanding both simple variables and complex data structures is essential for leveraging R’s analytical capabilities effectively, allowing for efficient data operations, manipulation, and analysis.
 
-```{r cars}
-summary(cars)
+### Data operators
+
+Operators are symbols or keywords that perform operations on variables and values, enabling various types of computations, comparisons, and data manipulations. They are fundamental to programming in R, as they allow you to create expressions that can process data and produce results.
+
+1. **Arithmetic Operators:**
+   - **`+`**: Addition (e.g., `x + y`)
+   - **`-`**: Subtraction (e.g., `x - y`)
+   - **`*`**: Multiplication (e.g., `x * y`)
+   - **`/`**: Division (e.g., `x / y`)
+   - **`^` or `**`**: Exponentiation (e.g., `x^y` or `x**y`)
+   - **`%%`**: Modulus (remainder of division) (e.g., `x %% y`)
+   - **`%/%`**: Integer division (e.g., `x %/% y`)
+
+2. **Relational Operators:**
+   - **`==`**: Equal to (e.g., `x == y`)
+   - **`!=`**: Not equal to (e.g., `x != y`)
+   - **`>`**: Greater than (e.g., `x > y`)
+   - **`<`**: Less than (e.g., `x < y`)
+   - **`>=`**: Greater than or equal to (e.g., `x >= y`)
+   - **`<=`**: Less than or equal to (e.g., `x <= y`)
+
+3. **Logical Operators:**
+   - **`&`**: Logical AND (element-wise) (e.g., `x & y`)
+   - **`|`**: Logical OR (element-wise) (e.g., `x | y`)
+   - **`!`**: Logical NOT (e.g., `!x`)
+   - **`&&`**: Logical AND (for single element) (e.g., `x && y`)
+   - **`||`**: Logical OR (for single element) (e.g., `x || y`)
+
+4. **Assignment Operators:**
+   - **`<-`**: Leftward assignment (e.g., `x <- 10`)
+   - **`->`**: Rightward assignment (e.g., `10 -> x`)
+   - **`=`**: Alternative assignment (e.g., `x = 10`)
+
+5. **Indexing/Extraction Operators:**
+   - **`[]`**: Extract elements by index (e.g., `x[1]`)
+   - **`[[]]`**: Extract single element, mainly used with lists and data frames (e.g., `x[[1]]`)
+   - **`$`**: Extract elements by name, often used with lists and data frames (e.g., `x$name`)
+
+6. **Miscellaneous Operators:**
+   - **`:`**: Sequence operator (e.g., `1:10` generates a sequence from 1 to 10)
+   - **`%in%`**: Membership operator, checks if elements belong to a set (e.g., `x %in% y`)
+   - **`%*%`**: Matrix multiplication (e.g., `A %*% B`)
+
+These operators form the backbone of R's programming capabilities, allowing users to perform a wide range of tasks from simple arithmetic to complex data manipulation and logical operations.
+
+## Data operations in R
+
+### Variables and vectors
+
+Let us start with simple data operations in R. 
+<br>
+[Note: Whatever we writes after # symbol will not be executed or recognized as part code. This utility we use to add comments or descriptions about the code]
+
+```{r}
+# Define two variables and assign them random values then calculate average of them.
+A=10
+B=12
+Average=(A+B)/2
+print(Average)
 ```
 
-## Including Plots
+In the above code, "A", "B" and "Average" are numerical variables. Names of variables can be a letter or a word (String). In programming a word is called string. 
 
-You can also embed plots, for example:
+Now imagine we have five numbers and we need to compute their sum and average. Here we do not need to define five individual variables, that will be too many variables and messy code. Instead we can define a **vector** of five numbers.
+
+```{r}
+myVector=c(5,10,12,3,100)
+print(myVector)
+```
+For finding sum and average , there are in-built functions in R.
+
+```{r}
+sum(myVector)
+mean(myVector)
+```
+
+Now we came across **function**. A function is a block of code designed to perform a specific task, which can be reused and executed when called with given inputs. For example, to find a sum of numbers in vector, we actually need to write code to consecutively add first to last elements of the vector. But the developers of R are already wrote the code for such operations and defined as a function. We can simply re-use or call the function whenever we need it. Check [here](https://www.scaler.com/topics/built-in-functions-in-r/) for some of the built-in functions in R.
+
+In R, a variable can take both numerical and character value. See below code
+
+```{r}
+X='Hello' # here we are assigning a string
+Y="H"    # here we are assigning a character
+
+print(X)
+print(Y)
+
+chrVec=c("hai","friend","good morning") # a vector of strings
+print(chrVec)
+```
+
+Note that, if we want to assign a character or a string it should be enclosed in quotes. Both single and double quotes will work.
+
+Let us now see if we can concatenate (or add) two character/string variable. For this purpose we need to use specific function **paste()**
+
+```{r}
+# Define two character variables. Here we are using the assignment operator "<-" instead of "=". Both will work
+
+first <- "Karolinska"
+last <- "Institutet"
+
+# Concatenate with a space in between (default behavior)
+full <- paste(first, last)
+
+print(full)
+
+# Concatenate with hyphen in between
+full <- paste(first, last,sep = "-")
+print(full)
+```
+
+### Data frames
+
+A data frame in R is a two-dimensional, table-like structure that stores data in rows and columns, where each column can contain different types of data.
+
+```{r}
+#Lets create a dataframe
+
+# Create a data frame with three columns
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie"),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# View the data frame
+print(df)
+```
+
+
+
 

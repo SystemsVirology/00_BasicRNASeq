@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Anoop Ambikan" />
 
 
-<title>Chapter1</title>
+<title>Basics of R</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -30,8 +29,10 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -217,10 +218,70 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
 
 
 
@@ -230,6 +291,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -251,7 +322,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Chapters
+    Exercises
      
     <span class="caret"></span>
   </a>
@@ -263,7 +334,7 @@ $(document).ready(function () {
       <a href="chapter2.html">Chapter 2</a>
     </li>
     <li>
-      <a href="chapter3.html">Chapter3</a>
+      <a href="chapter3.html">Chapter 3</a>
     </li>
   </ul>
 </li>
@@ -280,49 +351,230 @@ $(document).ready(function () {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Chapter1</h1>
-<h4 class="author">Anoop Ambikan</h4>
-<h4 class="date">8/20/2024</h4>
+<h1 class="title toc-ignore">Basics of R</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com"
-class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<p>R is a powerful open-source programming language and software
+environment widely used for statistical computing, data analysis, and
+graphical visualization. Its extensive range of packages and libraries
+makes it a preferred tool among statisticians, data scientists, and
+researchers for conducting complex analyses and creating sophisticated
+plots. <strong>RStudio</strong> is an integrated development environment
+(IDE) designed to enhance the R programming experience. It provides a
+user-friendly interface that includes a console, syntax-highlighted
+editor, and tools for managing files, plots, and packages. RStudio
+offers features such as code completion, debugging tools, and project
+management, which streamline the process of writing and executing R
+code. Its supportive ecosystem also includes features for creating
+dynamic reports and documents using R Markdown, which is invaluable for
+reproducible research.</p>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<p>Data structures are organized formats for storing, managing, and
+accessing data efficiently in computing. They define how data is
+arranged and related, enabling effective data manipulation and
+retrieval. In R, fundamental data structures include
+<strong>vectors</strong>, which store elements of the same type in a
+one-dimensional format; <strong>matrices</strong>, which extend vectors
+to two dimensions, organizing data into rows and columns; <strong>data
+frames</strong>, which allow for heterogeneous data types across
+columns, making them ideal for tabular data; and <strong>lists</strong>,
+which provide a flexible way to hold elements of diverse types and
+structures. Simple variables also play a crucial role in R by holding
+individual pieces of data. These include <strong>numeric
+variables</strong> for numbers, <strong>character variables</strong> for
+text, <strong>logical variables</strong> for Boolean values, and
+<strong>factor variables</strong> for categorical data with predefined
+levels. Understanding both simple variables and complex data structures
+is essential for leveraging R’s analytical capabilities effectively,
+allowing for efficient data operations, manipulation, and analysis.</p>
+<div id="data-operators" class="section level3">
+<h3>Data operators</h3>
+<p>Operators are symbols or keywords that perform operations on
+variables and values, enabling various types of computations,
+comparisons, and data manipulations. They are fundamental to programming
+in R, as they allow you to create expressions that can process data and
+produce results.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Arithmetic Operators:</strong>
+<ul>
+<li><strong><code>+</code></strong>: Addition (e.g.,
+<code>x + y</code>)</li>
+<li><strong><code>-</code></strong>: Subtraction (e.g.,
+<code>x - y</code>)</li>
+<li><strong><code>*</code></strong>: Multiplication (e.g.,
+<code>x * y</code>)</li>
+<li><strong><code>/</code></strong>: Division (e.g.,
+<code>x / y</code>)</li>
+<li><strong><code>^</code> or <code>**</code></strong>: Exponentiation
+(e.g., <code>x^y</code> or <code>x**y</code>)</li>
+<li><strong><code>%%</code></strong>: Modulus (remainder of division)
+(e.g., <code>x %% y</code>)</li>
+<li><strong><code>%/%</code></strong>: Integer division (e.g.,
+<code>x %/% y</code>)</li>
+</ul></li>
+<li><strong>Relational Operators:</strong>
+<ul>
+<li><strong><code>==</code></strong>: Equal to (e.g.,
+<code>x == y</code>)</li>
+<li><strong><code>!=</code></strong>: Not equal to (e.g.,
+<code>x != y</code>)</li>
+<li><strong><code>&gt;</code></strong>: Greater than (e.g.,
+<code>x &gt; y</code>)</li>
+<li><strong><code>&lt;</code></strong>: Less than (e.g.,
+<code>x &lt; y</code>)</li>
+<li><strong><code>&gt;=</code></strong>: Greater than or equal to (e.g.,
+<code>x &gt;= y</code>)</li>
+<li><strong><code>&lt;=</code></strong>: Less than or equal to (e.g.,
+<code>x &lt;= y</code>)</li>
+</ul></li>
+<li><strong>Logical Operators:</strong>
+<ul>
+<li><strong><code>&amp;</code></strong>: Logical AND (element-wise)
+(e.g., <code>x &amp; y</code>)</li>
+<li><strong><code>|</code></strong>: Logical OR (element-wise) (e.g.,
+<code>x | y</code>)</li>
+<li><strong><code>!</code></strong>: Logical NOT (e.g.,
+<code>!x</code>)</li>
+<li><strong><code>&amp;&amp;</code></strong>: Logical AND (for single
+element) (e.g., <code>x &amp;&amp; y</code>)</li>
+<li><strong><code>||</code></strong>: Logical OR (for single element)
+(e.g., <code>x || y</code>)</li>
+</ul></li>
+<li><strong>Assignment Operators:</strong>
+<ul>
+<li><strong><code>&lt;-</code></strong>: Leftward assignment (e.g.,
+<code>x &lt;- 10</code>)</li>
+<li><strong><code>-&gt;</code></strong>: Rightward assignment (e.g.,
+<code>10 -&gt; x</code>)</li>
+<li><strong><code>=</code></strong>: Alternative assignment (e.g.,
+<code>x = 10</code>)</li>
+</ul></li>
+<li><strong>Indexing/Extraction Operators:</strong>
+<ul>
+<li><strong><code>[]</code></strong>: Extract elements by index (e.g.,
+<code>x[1]</code>)</li>
+<li><strong><code>[[]]</code></strong>: Extract single element, mainly
+used with lists and data frames (e.g., <code>x[[1]]</code>)</li>
+<li><strong><code>$</code></strong>: Extract elements by name, often
+used with lists and data frames (e.g., <code>x$name</code>)</li>
+</ul></li>
+<li><strong>Miscellaneous Operators:</strong>
+<ul>
+<li><strong><code>:</code></strong>: Sequence operator (e.g.,
+<code>1:10</code> generates a sequence from 1 to 10)</li>
+<li><strong><code>%in%</code></strong>: Membership operator, checks if
+elements belong to a set (e.g., <code>x %in% y</code>)</li>
+<li><strong><code>%*%</code></strong>: Matrix multiplication (e.g.,
+<code>A %*% B</code>)</li>
+</ul></li>
+</ol>
+<p>These operators form the backbone of R’s programming capabilities,
+allowing users to perform a wide range of tasks from simple arithmetic
+to complex data manipulation and logical operations.</p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
+</div>
+<div id="data-operations-in-r" class="section level2">
+<h2>Data operations in R</h2>
+<div id="variables-and-vectors" class="section level3">
+<h3>Variables and vectors</h3>
+<p>Let us start with simple data operations in R. <br> [Note: Whatever
+we writes after # symbol will not be executed or recognized as part
+code. This utility we use to add comments or descriptions about the
+code]</p>
+<pre class="r"><code># Define two variables and assign them random values then calculate average of them.
+A=10
+B=12
+Average=(A+B)/2
+print(Average)</code></pre>
+<pre><code>## [1] 11</code></pre>
+<p>In the above code, “A”, “B” and “Average” are numerical variables.
+Names of variables can be a letter or a word (String). In programming a
+word is called string.</p>
+<p>Now imagine we have five numbers and we need to compute their sum and
+average. Here we do not need to define five individual variables, that
+will be too many variables and messy code. Instead we can define a
+<strong>vector</strong> of five numbers.</p>
+<pre class="r"><code>myVector=c(5,10,12,3,100)
+print(myVector)</code></pre>
+<pre><code>## [1]   5  10  12   3 100</code></pre>
+<p>For finding sum and average , there are in-built functions in R.</p>
+<pre class="r"><code>sum(myVector)</code></pre>
+<pre><code>## [1] 130</code></pre>
+<pre class="r"><code>mean(myVector)</code></pre>
+<pre><code>## [1] 26</code></pre>
+<p>Now we came across <strong>function</strong>. A function is a block
+of code designed to perform a specific task, which can be reused and
+executed when called with given inputs. For example, to find a sum of
+numbers in vector, we actually need to write code to consecutively add
+first to last elements of the vector. But the developers of R are
+already wrote the code for such operations and defined as a function. We
+can simply re-use or call the function whenever we need it. Check <a
+href="https://www.scaler.com/topics/built-in-functions-in-r/">here</a>
+for some of the built-in functions in R.</p>
+<p>In R, a variable can take both numerical and character value. See
+below code</p>
+<pre class="r"><code>X=&#39;Hello&#39; # here we are assigning a string
+Y=&quot;H&quot;    # here we are assigning a character
+
+print(X)</code></pre>
+<pre><code>## [1] &quot;Hello&quot;</code></pre>
+<pre class="r"><code>print(Y)</code></pre>
+<pre><code>## [1] &quot;H&quot;</code></pre>
+<pre class="r"><code>chrVec=c(&quot;hai&quot;,&quot;friend&quot;,&quot;good morning&quot;) # a vector of strings
+print(chrVec)</code></pre>
+<pre><code>## [1] &quot;hai&quot;          &quot;friend&quot;       &quot;good morning&quot;</code></pre>
+<p>Note that, if we want to assign a character or a string it should be
+enclosed in quotes. Both single and double quotes will work.</p>
+<p>Let us now see if we can concatenate (or add) two character/string
+variable. For this purpose we need to use specific function
+<strong>paste()</strong></p>
+<pre class="r"><code># Define two character variables. Here we are using the assignment operator &quot;&lt;-&quot; instead of &quot;=&quot;. Both will work
+
+first &lt;- &quot;Karolinska&quot;
+last &lt;- &quot;Institutet&quot;
+
+# Concatenate with a space in between (default behavior)
+full &lt;- paste(first, last)
+
+print(full)</code></pre>
+<pre><code>## [1] &quot;Karolinska Institutet&quot;</code></pre>
+<pre class="r"><code># Concatenate with hyphen in between
+full &lt;- paste(first, last,sep = &quot;-&quot;)
+print(full)</code></pre>
+<pre><code>## [1] &quot;Karolinska-Institutet&quot;</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data frames</h3>
+<p>A data frame in R is a two-dimensional, table-like structure that
+stores data in rows and columns, where each column can contain different
+types of data.</p>
+<pre class="r"><code>#Lets create a dataframe
+
+# Create a data frame with three columns
+df &lt;- data.frame(
+  Name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# View the data frame
+print(df)</code></pre>
+<pre><code>##      Name Age Height
+## 1   Alice  25    5.5
+## 2     Bob  30    6.0
+## 3 Charlie  35    5.8</code></pre>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -354,12 +606,36 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+
 <script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
 });
 </script>
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

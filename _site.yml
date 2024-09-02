@@ -6,13 +6,13 @@ navbar:
   left:
     - text: "Pre-course"
       href: preCourse.html
-    - text: "Chapters"
+    - text: "Exercises"
       menu:
         - text: "Chapter 1"
           href: chapter1.html
         - text: "Chapter 2"
           href: chapter2.html
-        - text: "Chapter3"
+        - text: "Chapter 3"
           href: chapter3.html
     - text: "Assignment"
       href: chapter3.html

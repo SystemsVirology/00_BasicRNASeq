@@ -11,7 +11,7 @@
 
 
 
-<title>System configuration</title>
+<title>Prerequisites for the course</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
@@ -222,6 +225,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -229,6 +295,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -250,7 +326,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Chapters
+    Exercises
      
     <span class="caret"></span>
   </a>
@@ -262,7 +338,7 @@ $(document).ready(function () {
       <a href="chapter2.html">Chapter 2</a>
     </li>
     <li>
-      <a href="chapter3.html">Chapter3</a>
+      <a href="chapter3.html">Chapter 3</a>
     </li>
   </ul>
 </li>
@@ -289,22 +365,219 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">System configuration</h1>
+<h1 class="title toc-ignore">Prerequisites for the course</h1>
 
 </div>
 
 
-<p>Before the initiation of the course all the required software and
-packages need to be installed in your laptop. The course require working
-installation of R and R studio in your preferred operating system. Any
-difficulties arise during installation can be discussed in the slack
-channel given in the home page of the website.</p>
-<div id="installation-of-r-r-studio" class="section level3">
-<h3>Installation of R &amp; R studio</h3>
+<p>Welcome to the transcriptomics data analysis training course. This
+course is designed to focus on the downstream analysis of transcriptomic
+data, including normalization, differential expression analysis,
+functional enrichment, and data visualization. To ensure a smooth
+learning experience, it is essential that participants have a
+foundational understanding of the upstream processes, such as quality
+assessment of raw sequencing data (FASTQ files), adapter trimming,
+sequence alignment, and read counting. These preliminary steps are
+crucial for generating high-quality data that will be used in downstream
+analyses. Therefore, before beginning this course, students are expected
+to familiarize themselves with these processes through independent study
+or prior training. These topics are covered in the previous weeks and it
+is better to refresh your understanding before starting this course. A
+very basic overview of the topics needed for this course are given
+below.</p>
+<div id="the-fastq-file-format" class="section level2">
+<h2>The fastq file format</h2>
+<p>The FASTQ file format is a widely used format in bioinformatics for
+storing raw sequencing data from high-throughput sequencing
+technologies. Each entry in a FASTQ file corresponds to a single
+sequencing read and is composed of four lines. The first line begins
+with an “@” symbol followed by a unique identifier for the read. The
+second line contains the nucleotide sequence (A, T, C, G) of the read.
+The third line starts with a “+” symbol and may repeat the read
+identifier or be left blank. The fourth line contains the quality
+scores, which are represented as a string of ASCII characters
+corresponding to the probability that each nucleotide in the sequence is
+incorrect. These quality scores are critical for assessing the accuracy
+of the sequencing data and for downstream processes such as trimming and
+alignment. More information about fastq file formats can be read <a
+href="https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002211">here</a>
+and <a href="https://en.wikipedia.org/wiki/FASTQ_format">here</a></p>
+<div id="the-phred-quality-score" class="section level3">
+<h3>The Phred quality score</h3>
+<p>The Phred quality score is a crucial metric used in sequencing
+technologies to assess the accuracy of nucleotide identification in DNA
+sequences. The Phred score quantifies the probability that a particular
+base is called incorrectly by the sequencer. Specifically, a higher
+Phred score indicates a lower likelihood of error, with the score being
+logarithmically related to the error probability. For instance, a Phred
+score of 20 corresponds to a 1 in 100 chance of an incorrect base call,
+while a score of 30 indicates a 1 in 1,000 chance. This scoring system
+is vital in bioinformatics for filtering and trimming low-quality
+sequences, ensuring that downstream analyses, such as alignment and
+variant calling, are based on the most reliable data possible. More
+information can be found <a
+href="https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/quality-scores.html">here</a>
+and <a
+href="https://drive5.com/usearch/manual/quality_score.html">here</a></p>
+</div>
+</div>
+<div id="fastq-quality-check" class="section level2">
+<h2>Fastq quality check</h2>
+<p>FastQC is a widely used tool for assessing the quality of
+high-throughput sequencing data. It provides a comprehensive overview of
+various quality metrics through a series of visualizations and reports.
+By analyzing raw sequencing files, FastQC evaluates key aspects such as
+base quality scores, GC content, sequence duplication levels, and
+overrepresented sequences. This allows researchers to identify potential
+issues, such as sequencing errors or contamination, early in the data
+analysis pipeline. The tool generates easy-to-interpret HTML reports,
+making it accessible for both novice and experienced users. For more
+detailed guidance, refer to the FastQC documentation and user guide
+available on the <a
+href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC
+website</a>.</p>
+</div>
+<div id="pre-processing-fastq-files" class="section level2">
+<h2>Pre-processing fastq files</h2>
+<p>Preprocessing FASTQ files is a crucial step in the sequencing data
+analysis pipeline, essential for ensuring the accuracy and reliability
+of downstream results. This process involves several key tasks: quality
+control, adapter trimming, and read filtering, which collectively
+enhance the overall quality of the data. Raw sequencing reads often
+contain low-quality bases, adapter sequences, and other contaminants
+that can lead to errors in subsequent analyses. Commonly used tools to
+perform pre-processing are Cutadapt, Trim Galore, and Trimmomatic.
+Cutadapt is widely used for removing adapter sequences from the ends of
+reads, effectively mitigating the risk of false-positive results caused
+by residual adapters. Trim Galore combines the functionalities of
+Cutadapt with additional trimming capabilities, focusing on removing
+low-quality bases and trimming reads to a consistent length. Trimmomatic
+is another popular tool that provides a range of trimming options,
+including the removal of adapter sequences, filtering of low-quality
+reads, and clipping of bases from both ends of the read based on
+user-defined quality thresholds. For further details, you can refer to
+the respective documentation and user guides available on the <a
+href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt website</a>,
+<a href="https://github.com/FelixKrueger/TrimGalore">Trim Galore
+website</a>, and <a
+href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic
+website</a>.</p>
+</div>
+<div id="read-alignment" class="section level2">
+<h2>Read alignment</h2>
+<p>Aligning transcriptomic reads against a reference genome is a
+fundamental step in transcriptomics that facilitates the accurate
+mapping of RNA sequencing (RNA-seq) data (the reads) to known genomic
+locations. This alignment process is crucial for translating raw
+sequencing data into meaningful biological insights. By aligning reads
+to a reference genome, researchers can identify where each read
+originates, determine gene expression levels, and detect alternative
+splicing events, gene fusions, and other genomic variations. Accurate
+alignment is essential for quantifying gene expression accurately, as it
+ensures that reads are properly assigned to their corresponding genes or
+transcripts. Commonly used tools for read alignment include STAR
+(Spliced Transcripts Alignment to a Reference), which excels in handling
+large-scale RNA-seq datasets and complex splicing events, and HISAT2,
+which efficiently aligns reads to the genome while accommodating for
+splicing and structural variations. TopHat2, an earlier tool in this
+domain, is also used but is largely superseded by STAR and HISAT2 in
+modern workflows. These alignment tools employ sophisticated algorithms
+to map reads with high sensitivity and specificity, considering the
+complexities of spliced and overlapping transcripts. Successful
+alignment enables accurate downstream analyses such as differential
+expression studies, functional annotation, and pathway analysis. For
+more detailed guidance on these tools, consult the documentation and
+user guides available here, <a
+href="https://github.com/alexdobin/STAR">STAR</a> , <a
+href="http://daehwankimlab.github.io/hisat2/">HISAT2</a>, <a
+href="https://ccb.jhu.edu/software/tophat/index.shtml">TopHat2</a>.</p>
+<div id="reference-genome" class="section level3">
+<h3>Reference genome</h3>
+<p>The reference genome serves as a critical framework for mapping and
+interpreting sequencing data. For humans, the most widely used reference
+genome is GRCh38, the latest version of the Human Genome Reference
+Consortium’s (HGNC) assembly, which represents the human genome with a
+high degree of accuracy and completeness. Prior versions, such as GRCh37
+(also known as hg19), are still in use but are gradually being phased
+out in favor of the more recent GRCh38, which includes improvements in
+genome assembly and annotation, including updated sequences for
+previously problematic regions and additional alternate loci.</p>
+<p>The human reference genome can be obtained from several authoritative
+sources. The <strong>Genome Reference Consortium (GRC)</strong> provides
+the latest versions of the human reference genome, including GRCh38,
+through their official website. Additionally, the <strong>Ensembl Genome
+Browser</strong> offers access to various reference genome assemblies
+and annotations, including GRCh38 and its predecessors. For researchers
+looking for broader genome datasets, <strong>NCBI (National Center for
+Biotechnology Information)</strong> provides reference genome sequences
+through its <strong>Genome</strong> database, where users can download
+FASTA files and annotation data. Furthermore, the <strong>UCSC Genome
+Browser</strong> offers various human genome versions along with a range
+of tools for visualizing and accessing genomic data. These resources
+provide comprehensive and up-to-date reference genomes suitable for a
+wide range of genomic analyses.</p>
+</div>
+<div id="gene-model" class="section level3">
+<h3>Gene model</h3>
+<p>A reference genome is annotated with a gene model that provides a
+detailed description of the gene structures within the genome. This
+model includes information on gene locations, exon-intron boundaries,
+and the transcriptional start and end sites. The gene model is crucial
+for understanding gene function and regulation and is typically
+represented in annotation files such as GTF (Gene Transfer Format) and
+GFF (General Feature Format). Both file formats provide similar types of
+information but have different syntaxes and are used in various tools
+and databases.</p>
+<p>The GTF file format specifies the gene structures with fields such as
+gene ID, transcript ID, exon coordinates, and associated attributes,
+offering a structured way to describe gene features and their
+relationships. Similarly, GFF files include a broader range of
+annotations, including gene features, regulatory elements, and other
+genomic features. Both formats are essential for downstream analyses
+such as read alignment, gene expression quantification, and variant
+detection, as they allow researchers to map sequencing reads accurately
+to known genes and interpret functional elements in the genome. For more
+information, refer to the Ensembl GTF documentation and GFF
+specifications <a
+href="https://useast.ensembl.org/info/website/upload/gff.html">here</a>.</p>
+</div>
+</div>
+<div id="read-counting" class="section level2">
+<h2>Read counting</h2>
+<p>Read counting is a pivotal step in differential expression analysis,
+which involves quantifying the number of sequencing reads that map to
+each gene or transcript after alignment to a reference genome. This
+quantification is crucial for determining gene expression levels and
+comparing them across different experimental conditions or treatments.
+Accurate read counting enables researchers to identify genes that are
+differentially expressed, which can provide insights into biological
+processes and underlying mechanisms of disease. Commonly used tools for
+read counting include <strong>HTSeq</strong>, which parses aligned read
+data in BAM format and counts reads overlapping with annotated features
+from GTF or GFF files, and <strong>featureCounts</strong>, a part of the
+<strong>Subread</strong> package, which is known for its efficiency and
+accuracy in counting reads for large-scale RNA-seq datasets. Another
+popular tool is <strong>RSEM (RNA-Seq by
+Expectation-Maximization)</strong>, which not only counts reads but also
+estimates transcript abundances, accounting for multi-mapping reads and
+transcript isoforms. These tools provide essential input for statistical
+analyses, such as those performed by DESeq2 or edgeR, which further
+assess differential expression by normalizing counts and applying
+statistical models to determine significance. Accurate and reliable read
+counting is thus fundamental for drawing meaningful conclusions from
+RNA-seq data and advancing our understanding of gene expression
+regulation. For detailed information on these tools, refer to the <a
+href="https://htseq.readthedocs.io/en/latest/">HTSeq documentation</a>,
+the <a
+href="https://subread.sourceforge.net/featureCounts.html">featureCounts
+manual</a>, and the <a
+href="https://github.com/bli25/RSEM_tutorial">RSEM website</a>.</p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -342,6 +615,35 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
