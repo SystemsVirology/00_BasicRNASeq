@@ -6,6 +6,8 @@ navbar:
   left:
     - text: "Pre-course"
       href: preCourse.html
+    - text: "System configuration"
+      href: chapter2.html
     - text: "Exercises"
       menu:
         - text: "Chapter 1"

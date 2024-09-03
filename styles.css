@@ -22,19 +22,23 @@ body {
 
 /* Headings styles */
 h1 {
-    font-size: 2em; /* 32px if base font size is 16px */
+    font-size: 2em;
+    color: #1E90FF;/* 32px if base font size is 16px */
 }
 
 h2 {
-    font-size: 1.5em; /* 24px */
+    font-size: 1.5em;
+    color: #1E90FF/* 24px */
 }
 
 h3 {
-    font-size: 1.17em; /* 18.7px */
+    font-size: 1.17em;
+    color: #1E90FF/* 18.7px */
 }
 
 h4 {
-    font-size: 1em; /* 16px */
+    font-size: 1em;
+    color: #1E90FF/* 16px */
 }
 
 h5 {

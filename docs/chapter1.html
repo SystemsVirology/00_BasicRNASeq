@@ -320,6 +320,9 @@ div.tocify {
         <li>
   <a href="preCourse.html">Pre-course</a>
 </li>
+<li>
+  <a href="chapter2.html">System configuration</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Exercises
@@ -529,7 +532,14 @@ print(X)</code></pre>
 print(chrVec)</code></pre>
 <pre><code>## [1] &quot;hai&quot;          &quot;friend&quot;       &quot;good morning&quot;</code></pre>
 <p>Note that, if we want to assign a character or a string it should be
-enclosed in quotes. Both single and double quotes will work.</p>
+enclosed in quotes. Both single and double quotes will work. In case if
+you want to access individual element in a vector you can do that by
+specifying the element’s index (position) in the vector. See the example
+below,</p>
+<pre class="r"><code>chrVec=c(&quot;hai&quot;,&quot;friend&quot;,&quot;good morning&quot;)
+
+print(chrVec[1]) # it will print the first element in the vector</code></pre>
+<pre><code>## [1] &quot;hai&quot;</code></pre>
 <p>Let us now see if we can concatenate (or add) two character/string
 variable. For this purpose we need to use specific function
 <strong>paste()</strong></p>
@@ -568,6 +578,678 @@ print(df)</code></pre>
 ## 1   Alice  25    5.5
 ## 2     Bob  30    6.0
 ## 3 Charlie  35    5.8</code></pre>
+<p>If you use print(df), it will print all the rows in the data frame.
+If you simply write the dataframe and execute it will also print the
+entire dataframe. If your dataframe is big, contains many rows printing
+entire dataframe to the screen will be messy. So you can chose to print
+few lines for inspection purpose. You can try the function
+<strong>head()</strong> and <strong>tail()</strong>. Head will print
+first 5 lines and tail will print last 5 lines by default. You can also
+specify the number of rows you want to be printed. Another way is use
+the function <strong>View()</strong> which will open the dataframe in
+another window.</p>
+<pre class="r"><code>head(df)</code></pre>
+<pre><code>##      Name Age Height
+## 1   Alice  25    5.5
+## 2     Bob  30    6.0
+## 3 Charlie  35    5.8</code></pre>
+<pre class="r"><code>tail(df)</code></pre>
+<pre><code>##      Name Age Height
+## 1   Alice  25    5.5
+## 2     Bob  30    6.0
+## 3 Charlie  35    5.8</code></pre>
+<pre class="r"><code>head(df,5)</code></pre>
+<pre><code>##      Name Age Height
+## 1   Alice  25    5.5
+## 2     Bob  30    6.0
+## 3 Charlie  35    5.8</code></pre>
+<pre class="r"><code>View(df)</code></pre>
+<p>We can access the individual columns of the dataframe using
+<strong>$</strong> operator as below. Also same as accessing elements in
+vector by specifying the index.</p>
+<pre class="r"><code>df$Name</code></pre>
+<pre><code>## [1] &quot;Alice&quot;   &quot;Bob&quot;     &quot;Charlie&quot;</code></pre>
+<pre class="r"><code>df$Age</code></pre>
+<pre><code>## [1] 25 30 35</code></pre>
+<pre class="r"><code>df[2]</code></pre>
+<pre><code>##   Age
+## 1  25
+## 2  30
+## 3  35</code></pre>
+<p>Let us see another interesting operation using paste() function. In
+the dataframe I want to add one more column which is concatenation of
+Name and Age column.</p>
+<pre class="r"><code>df$NewCoumm=paste(df$Name,df$Age,sep = &quot;_&quot;)
+df</code></pre>
+<pre><code>##      Name Age Height   NewCoumm
+## 1   Alice  25    5.5   Alice_25
+## 2     Bob  30    6.0     Bob_30
+## 3 Charlie  35    5.8 Charlie_35</code></pre>
+</div>
+<div id="matrices" class="section level3">
+<h3>Matrices</h3>
+<p>A matrix in R is a two-dimensional data structure that stores
+elements of the same type (typically numeric, logical, or character) in
+a rectangular layout consisting of rows and columns. It is essentially a
+collection of vectors of the same length stacked together, where each
+column (or row) in the matrix is a vector.</p>
+<p>Key Characteristics of Matrices in R: - <strong>Homogeneous Data
+Type</strong>: All elements in a matrix must be of the same type. -
+<strong>Two Dimensions</strong>: Matrices have two dimensions—rows and
+columns. - <strong>Indexing</strong>: Elements in a matrix are accessed
+using a pair of indices: <code>[row, column]</code>.</p>
+<p>You can create a matrix using the <code>matrix()</code> function:</p>
+<pre class="r"><code># Create a matrix with 3 rows and 2 columns
+my_matrix &lt;- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2)
+
+# View the matrix
+print(my_matrix)</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6</code></pre>
+<p>Accessing Elements in a Matrix Elements in a matrix can be accessed
+using the <code>[row, column]</code> notation:</p>
+<pre class="r"><code># Access the element in the first row and second column
+element &lt;- my_matrix[1, 2]
+print(element)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code># Access all elements in the second row
+second_row &lt;- my_matrix[2, ]
+print(second_row)</code></pre>
+<pre><code>## [1] 2 5</code></pre>
+<pre class="r"><code># Access all elements in the first column
+first_column &lt;- my_matrix[, 1]
+print(first_column)</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<p>Common Matrix Operations - <strong>Transpose</strong>:
+<code>t(my_matrix)</code> swaps the rows and columns of the matrix. -
+<strong>Matrix Multiplication</strong>: <code>%*%</code> is used for
+matrix multiplication. - <strong>Element-wise Operations</strong>: Basic
+arithmetic operations like <code>+</code>, <code>-</code>,
+<code>*</code>, and <code>/</code> are performed element-wise.</p>
+<p>Matrices are widely used in statistical computing, linear algebra,
+and data analysis in R due to their efficiency in handling
+two-dimensional numeric data.</p>
+</div>
+<div id="list" class="section level3">
+<h3>List</h3>
+<p>A list in R is a versatile data structure that can store a collection
+of elements of different types, including vectors, matrices, data
+frames, other lists, and more. Unlike vectors or matrices, which are
+homogeneous (all elements must be of the same type), a list is
+heterogeneous, meaning it can contain elements of different types and
+sizes.</p>
+<p>Key Characteristics of Lists in R: - <strong>Heterogeneous</strong>:
+Elements within a list can be of different types (e.g., numeric,
+character, logical, or even other lists). - <strong>Ordered</strong>:
+Lists are ordered collections, meaning the elements maintain the order
+in which they were added. - <strong>Named or Unnamed</strong>: List
+elements can be accessed by their position (index) or by a name if the
+list elements are named.</p>
+<p><strong>Creating a List</strong> You can create a list using the
+<code>list()</code> function:</p>
+<pre class="r"><code># Create a list containing various elements
+my_list &lt;- list(
+  name = &quot;Alice&quot;,
+  age = 25,
+  scores = c(90, 85, 88),
+  is_student = TRUE,
+  address = list(street = &quot;Main St&quot;, city = &quot;Springfield&quot;)
+)
+
+# View the list
+print(my_list)</code></pre>
+<pre><code>## $name
+## [1] &quot;Alice&quot;
+## 
+## $age
+## [1] 25
+## 
+## $scores
+## [1] 90 85 88
+## 
+## $is_student
+## [1] TRUE
+## 
+## $address
+## $address$street
+## [1] &quot;Main St&quot;
+## 
+## $address$city
+## [1] &quot;Springfield&quot;</code></pre>
+<p><strong>Accessing Elements in a List</strong> Elements in a list can
+be accessed using <code>[[ ]]</code> for positional indexing,
+<code>$</code> for named elements, or <code>[ ]</code> for
+subsetting:</p>
+<pre class="r"><code># Access the element by position
+first_element &lt;- my_list[[1]]
+print(first_element)</code></pre>
+<pre><code>## [1] &quot;Alice&quot;</code></pre>
+<pre class="r"><code># Output: &quot;Alice&quot;
+
+# Access the element by name
+age_element &lt;- my_list$age
+print(age_element)</code></pre>
+<pre><code>## [1] 25</code></pre>
+<pre class="r"><code># Output: 25
+
+# Access a nested element (street in the address list)
+street_name &lt;- my_list$address$street
+print(street_name)</code></pre>
+<pre><code>## [1] &quot;Main St&quot;</code></pre>
+<pre class="r"><code># Output: &quot;Main St&quot;
+
+# Access multiple elements as a sublist
+sublist &lt;- my_list[c(&quot;name&quot;, &quot;age&quot;)]
+print(sublist)</code></pre>
+<pre><code>## $name
+## [1] &quot;Alice&quot;
+## 
+## $age
+## [1] 25</code></pre>
+<p><strong>Modifying a List</strong> You can add, modify, or remove
+elements in a list:</p>
+<pre class="r"><code># Add a new element
+my_list$gender &lt;- &quot;Female&quot;
+
+# Modify an existing element
+my_list$age &lt;- 26
+
+# Remove an element
+my_list$scores &lt;- NULL
+
+# View the updated list
+print(my_list)</code></pre>
+<pre><code>## $name
+## [1] &quot;Alice&quot;
+## 
+## $age
+## [1] 26
+## 
+## $is_student
+## [1] TRUE
+## 
+## $address
+## $address$street
+## [1] &quot;Main St&quot;
+## 
+## $address$city
+## [1] &quot;Springfield&quot;
+## 
+## 
+## $gender
+## [1] &quot;Female&quot;</code></pre>
+<p><strong>Use Cases for Lists</strong> - <strong>Flexible Data
+Storage</strong>: Lists are useful for storing related but diverse types
+of data, such as the results of statistical tests (e.g., test statistic,
+p-value, and data used). - <strong>Complex Data Structures</strong>:
+Lists can be nested, allowing you to create complex data structures like
+trees, graphs, or data frames within lists. - <strong>Function
+Returns</strong>: Many R functions return their results as lists,
+especially when the output is multi-faceted or complex.</p>
+<p>Lists are one of the most powerful and flexible data structures in R,
+making them essential for a wide range of data manipulation and analysis
+tasks.</p>
+</div>
+</div>
+<div id="file-operations" class="section level2">
+<h2>File operations</h2>
+<p>We will do various file operations through the course. This involves
+writing data to a file and reading data from a file to R
+environment.</p>
+<p>Most, commonly used for reading contents of a file are
+<strong>read.csv()</strong>, <strong>read.table()</strong>,
+<strong>read.delim()</strong></p>
+<p>Most, commonly used for writing data to a file are
+<strong>write.csv</strong>, <strong>write.table</strong>.</p>
+<p>Choice of the function is depend on the types of file we are reading
+(for reading) and types of data, how we want to store the data in a file
+(for writing)</p>
+<p>In this course we are mainly using plain text files either comma
+separated or tab separated. So mostly we will use
+<strong>read.delim()</strong> and <strong>write.table</strong> function.
+Using these we can handle both comma and tab separated files.</p>
+<ul>
+<li>In comma separated file, the columns will be separated by a
+comma</li>
+<li>In tab separated fle, the columns will be separted by a tab</li>
+</ul>
+<p>While using these function it is needed to specify the location of
+file (file path). The file path structure is different in different
+operating system. For example in Linux, path of a file resides in
+Desktop is <strong>/home/YourUsername/Desktop/filename.txt</strong> same
+in windows will be <strong>C:.txt</strong>. In Mac it will be
+<strong>/Users/YourUsername/Desktop/filename.txt</strong></p>
+<p>So in order avoid file path problems, we will do all the file
+operations in a dedicated folder, so that we need to only specify the
+filename only.</p>
+<p>First create a folder somewhere comfortable. For this tutorial I am
+creating a folder named <strong>Tutorial</strong> in desktop. Then I
+will define the folder <strong>Tutorial</strong> as our working
+directory.</p>
+<pre class="r"><code>setwd(&quot;~/Desktop/Tutorial&quot;) # In linux
+#setwd(&quot;C:\Users\YourUsername\Desktop\Tutorial&quot;) # in Windows. You need to replace your username
+#setwd(&quot;/Users/YourUsername/Desktop/Tutorial&quot;) # in Mac</code></pre>
+<p>After setting your working directory, check it has worked using the
+function <strong>getwd()</strong>. This function display the current
+working directory</p>
+<pre class="r"><code>getwd()  # should display path to the Tutorial folder</code></pre>
+<pre class="r"><code># Create a data frame 
+df &lt;- data.frame(
+  Name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# Now write the data frame to a file.
+write.table(df,file=&quot;TestFile.txt&quot;,sep=&quot;\t&quot;,quote = FALSE,row.names = FALSE)
+
+# Change the sep=&quot;\t&quot; to sep=&quot;,&quot; for writing the dataframe to comma separated file
+
+write.table(df,file=&quot;TestFile.csv&quot;,sep=&quot;,&quot;,quote = FALSE,row.names = FALSE)</code></pre>
+<pre class="r"><code># Create a data frame 
+df &lt;- data.frame(
+  Name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# Now write the data frame to a file.
+write.table(df,file=&quot;TestFile.txt&quot;,sep=&quot;\t&quot;,quote = FALSE,row.names = FALSE)
+
+# Change the sep=&quot;\t&quot; to sep=&quot;,&quot; for writing the dataframe to comma separated file
+
+write.table(df,file=&quot;TestFile.txt&quot;,sep=&quot;,&quot;,quote = FALSE,row.names = FALSE)</code></pre>
+<pre class="r"><code>dfNew=read.delim(&quot;TestFile.csv&quot;,sep=&quot;,&quot;)
+print(dfNew)</code></pre>
+<pre><code>##      Name Age Height
+## 1   Alice  25    5.5
+## 2     Bob  30    6.0
+## 3 Charlie  35    5.8</code></pre>
+<pre class="r"><code>dfNew=read.delim(&quot;TestFile.txt&quot;,sep=&quot;\t&quot;)
+print(dfNew)</code></pre>
+<pre><code>##   Name.Age.Height
+## 1    Alice,25,5.5
+## 2        Bob,30,6
+## 3  Charlie,35,5.8</code></pre>
+<pre class="r"><code># If you want to define the first column as row name
+dfNew=read.delim(&quot;TestFile.txt&quot;,sep=&quot;\t&quot;,row.names = 1)
+print(dfNew)</code></pre>
+<pre><code>## data frame with 0 columns and 3 rows</code></pre>
+<pre class="r"><code># Observe the differences</code></pre>
+</div>
+<div id="visualizations" class="section level2">
+<h2>Visualizations</h2>
+<p>R offers a wide range of plotting capabilities, with the base R
+plotting system providing many functions for creating basic plots.
+Additionally, the <strong>ggplot2</strong> package is one of the most
+popular and powerful tools for creating advanced and customizable plots
+in R.</p>
+<div id="common-plots-in-r" class="section level3">
+<h3>Common Plots in R</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Base R Plotting System</strong>:
+<ul>
+<li><strong>Scatter Plot</strong>: <code>plot(x, y)</code></li>
+<li><strong>Line Plot</strong>: <code>plot(x, y, type = "l")</code></li>
+<li><strong>Histogram</strong>: <code>hist(x)</code></li>
+<li><strong>Bar Plot</strong>: <code>barplot(height)</code></li>
+<li><strong>Boxplot</strong>: <code>boxplot(x)</code></li>
+<li><strong>Pie Chart</strong>: <code>pie(x)</code></li>
+<li><strong>Heatmap</strong>: <code>heatmap(x)</code></li>
+</ul></li>
+<li><strong><code>ggplot2</code> Package</strong>:</li>
+</ol>
+<p><code>ggplot2</code> is part of the Tidyverse and offers a more
+consistent and powerful system for creating complex graphics. In the
+course we use ggplot mainly to generate all the figures.</p>
+</div>
+<div id="r-packages" class="section level3">
+<h3>R packages</h3>
+<p>ggplot is a package in R. A package in R is a collection of
+functions, data, and documentation bundled together, which extends the
+functionality of R. Packages provide a way to share code and data with
+others and to reuse code for specific tasks, such as data manipulation,
+statistical analysis, visualization, and more.</p>
+</div>
+<div id="key-features-of-an-r-package" class="section level3">
+<h3>Key Features of an R Package</h3>
+<ul>
+<li><strong>Functions</strong>: Packages contain functions that perform
+specific tasks or calculations. For example, the <code>ggplot2</code>
+package provides functions for creating advanced graphics.</li>
+<li><strong>Data</strong>: Packages can include datasets that are used
+for examples, testing, or teaching. For instance, the
+<code>datasets</code> package contains datasets like <code>iris</code>
+and <code>mtcars</code>.</li>
+<li><strong>Documentation</strong>: Packages include documentation that
+describes the functions and datasets they contain, often including
+examples of how to use them.</li>
+<li><strong>Dependencies</strong>: Some packages depend on other
+packages. R will automatically install and load these dependencies when
+you install a package.</li>
+</ul>
+</div>
+<div id="using-packages-in-r" class="section level3">
+<h3>Using Packages in R</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Installing a Package</strong>: You can install a package
+from CRAN (Comprehensive R Archive Network) using the
+<code>install.packages()</code> function.</li>
+</ol>
+<pre class="r"><code>   install.packages(&quot;ggplot2&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Loading a Package</strong>: After installation, you need to
+load the package into your R session using the <code>library()</code>
+function.</li>
+</ol>
+<pre class="r"><code>   library(ggplot2)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Using Package Functions</strong>: Once a package is loaded,
+you can use its functions directly.</li>
+</ol>
+<pre class="r"><code>ggplot(data, aes(x, y)) + geom_point()</code></pre>
+</div>
+<div id="types-of-r-packages" class="section level3">
+<h3>Types of R Packages</h3>
+<ul>
+<li><strong>Base Packages</strong>: These come pre-installed with R and
+include basic functions and datasets (e.g., <code>stats</code>,
+<code>utils</code>, <code>datasets</code>).</li>
+<li><strong>Recommended Packages</strong>: These are commonly used
+packages that are often installed with R but can also be installed
+separately (e.g., <code>MASS</code>, <code>lattice</code>).</li>
+<li><strong>Contributed Packages</strong>: These are developed by the R
+community and can be installed from CRAN, GitHub, or other repositories
+(e.g., <code>dplyr</code>, <code>shiny</code>,
+<code>tidyverse</code>).</li>
+</ul>
+</div>
+<div id="popular-r-packages" class="section level3">
+<h3>Popular R Packages</h3>
+<ul>
+<li><strong>Data Manipulation</strong>: <code>dplyr</code>,
+<code>data.table</code></li>
+<li><strong>Data Visualization</strong>: <code>ggplot2</code>,
+<code>plotly</code></li>
+<li><strong>Machine Learning</strong>: <code>caret</code>,
+<code>randomForest</code></li>
+<li><strong>Statistical Modeling</strong>: <code>lme4</code>,
+<code>MASS</code></li>
+<li><strong>Reporting and Web Applications</strong>: <code>shiny</code>,
+<code>rmarkdown</code></li>
+</ul>
+<p>Packages are essential in R, allowing users to perform complex
+analyses, create stunning visualizations, and automate tasks with
+minimal effort. The vast ecosystem of R packages is one of the key
+reasons for R’s popularity in data science and statistical
+computing.</p>
+</div>
+<div id="ggplot2" class="section level3">
+<h3>ggplot2</h3>
+<p>ggplot2 is a R package which provides several functionalities make
+customizable and quality figures. We can try to make different plots
+using ggplote package.</p>
+<div id="scatter-plot" class="section level4">
+<h4>Scatter Plot</h4>
+<p>We can use a built in dataset provided by R, for practising.
+<code>mtcars</code> is a built-in dataset. It is a dataframe. We can
+first inspect the dataframe.</p>
+<pre class="r"><code>head(mtcars)</code></pre>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>Now we can use the data set to generate a x-y scatter plot. Observe
+the inputs given in the ggplot function. First we give dataframe, then
+we define the aesthetics using the <code>aes()</code> function. In
+aesthetics we will input what should be in x and y axis. Then to
+generate scatter plot we will add the corresponding
+<code>geometric</code> / <code>geom</code> object. For scatter plot it
+is <code>geom_point()</code>.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Let us now do some customization on this plot. We will try increasing
+the size of point and change color</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point(size=5,color=&quot;red&quot;)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>We can also set the size according an input numerical value, for
+example the measurements in the column <code>qsec</code>. This should be
+defined in the aesthetics.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg,size=qsec)) + geom_point(color=&quot;red&quot;)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>ggplot provide further customizable options. <code>Theme()</code> is
+a function using which we can do several kinds of customization to the
+plot.</p>
+<p>In the <code>ggplot2</code> package in R, the <code>theme()</code>
+function is used to modify and customize the non-data components of your
+plot, such as text, gridlines, background, and more. The term “theme”
+refers to the overall appearance or “look and feel” of the plot.</p>
+</div>
+<div id="expansion-of-theme" class="section level4">
+<h4>Expansion of <code>theme()</code></h4>
+<ul>
+<li><strong>T</strong>: Text</li>
+<li><strong>H</strong>: Headings</li>
+<li><strong>E</strong>: Elements</li>
+<li><strong>M</strong>: Margins and spacing</li>
+<li><strong>E</strong>: Everything else (general appearance
+settings)</li>
+</ul>
+</div>
+<div id="what-does-theme-do" class="section level4">
+<h4>What Does <code>theme()</code> Do?</h4>
+<p>The <code>theme()</code> function allows you to control the
+appearance of almost every aspect of your plot that isn’t directly
+related to the data itself. This includes:</p>
+<ul>
+<li><strong>Text Elements</strong>: Customize the appearance of all text
+in the plot.
+<ul>
+<li><code>element_text()</code>: Adjust font size, color, face (bold,
+italic), angle, etc.</li>
+<li>Example:
+<code>axis.title = element_text(size = 14, face = "bold", color = "blue")</code></li>
+</ul></li>
+<li><strong>Background Elements</strong>: Control the background color
+and borders.
+<ul>
+<li><code>element_rect()</code>: Modify rectangular elements like plot
+background and panel background.</li>
+<li>Example:
+<code>panel.background = element_rect(fill = "lightgray")</code></li>
+</ul></li>
+<li><strong>Gridlines and Axis Lines</strong>: Adjust the appearance of
+gridlines and axis lines.
+<ul>
+<li><code>element_line()</code>: Customize line properties like color,
+size, and type.</li>
+<li>Example:
+<code>panel.grid.major = element_line(color = "gray", linetype = "dashed")</code></li>
+</ul></li>
+<li><strong>Legend</strong>: Customize the position, background, and
+text in the legend.
+<ul>
+<li><code>legend.position</code>: Control where the legend appears on
+the plot.</li>
+<li>Example: <code>legend.position = "bottom"</code></li>
+</ul></li>
+<li><strong>Margins and Spacing</strong>: Control the spacing around and
+within plot elements.
+<ul>
+<li><code>plot.margin</code>: Adjust the margins around the entire
+plot.</li>
+<li>Example: <code>plot.margin = margin(10, 10, 10, 10)</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="example-of-using-theme" class="section level4">
+<h4>Example of Using <code>theme()</code></h4>
+<pre class="r"><code>ggplot(mtcars, aes(x=wt, y=mpg,size=qsec)) + geom_point(color=&quot;red&quot;) +
+  theme(
+    axis.title = element_text(size = 14, face = &quot;bold&quot;, color = &quot;darkgreen&quot;),
+    axis.text = element_text(size = 12, color = &quot;black&quot;),
+    panel.background = element_rect(fill = &quot;lightgray&quot;),
+    panel.grid.major = element_line(color = &quot;white&quot;),
+    panel.grid.minor = element_line(color = &quot;lightblue&quot;),
+    legend.position = &quot;bottom&quot;,
+    plot.margin = margin(20, 20, 20, 20)
+  )</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>check all functionalities of provided by <code>theme()</code> <a
+href="https://ggplot2.tidyverse.org/reference/theme.html">here</a></p>
+</div>
+<div id="line-plot" class="section level4">
+<h4>Line Plot</h4>
+<p>We need to use the geom object <code>geom_line()</code> to make line
+plot.</p>
+<pre class="r"><code># Create a dummy dataset for practising
+df &lt;- data.frame(dose=c(&quot;D0.5&quot;, &quot;D1&quot;, &quot;D2&quot;),
+                len=c(4.2, 10, 29.5))
+head(df)</code></pre>
+<pre><code>##   dose  len
+## 1 D0.5  4.2
+## 2   D1 10.0
+## 3   D2 29.5</code></pre>
+<pre class="r"><code>library(ggplot2)
+# Basic line plot
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code># Change the line type and also adding point notice that we are using geom_point() to add points
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line(linetype = &quot;dashed&quot;)+
+  geom_point()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<pre class="r"><code># Change the color and increase size of the line
+
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line(color=&quot;red&quot;,linewidth=3)+
+  geom_point()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
+</div>
+<div id="histogram" class="section level4">
+<h4>Histogram</h4>
+<p>Using the geom object <code>geom_histogram()</code></p>
+<pre class="r"><code># Creating a dummy dataframe
+df &lt;- data.frame(
+  sex=factor(rep(c(&quot;F&quot;, &quot;M&quot;), each=200)),
+  weight=round(c(rnorm(200, mean=55, sd=5), rnorm(200, mean=65, sd=5)))
+  )
+head(df)</code></pre>
+<pre><code>##   sex weight
+## 1   F     53
+## 2   F     54
+## 3   F     51
+## 4   F     68
+## 5   F     63
+## 6   F     57</code></pre>
+<pre class="r"><code>library(ggplot2)
+# Basic histogram
+ggplot(df, aes(x=weight)) + geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="r"><code># Change the width of bins
+ggplot(df, aes(x=weight)) + 
+  geom_histogram(binwidth=1)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<pre class="r"><code># Change colors
+ggplot(df, aes(x=weight)) + 
+  geom_histogram(color=&quot;black&quot;, fill=&quot;white&quot;)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
+</div>
+<div id="bar-plot" class="section level4">
+<h4>Bar Plot</h4>
+<p>Using the geom object <code>geom_bar()</code></p>
+<pre class="r"><code># Creating a dummy dataframe
+
+df &lt;- data.frame(dose=c(&quot;D0.5&quot;, &quot;D1&quot;, &quot;D2&quot;),
+                len=c(4.2, 10, 29.5))
+head(df)</code></pre>
+<pre><code>##   dose  len
+## 1 D0.5  4.2
+## 2   D1 10.0
+## 3   D2 29.5</code></pre>
+<pre class="r"><code># Basic barplot
+ggplot(data=df, aes(x=dose, y=len)) + geom_bar(stat=&quot;identity&quot;)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre class="r"><code># Horizontal bar plot
+ggplot(data=df, aes(x=dose, y=len)) + geom_bar(stat=&quot;identity&quot;) + coord_flip()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level4">
+<h4>Boxplot</h4>
+<p>Using the geom object <code>geom_boxplot()</code>. We can make use of
+a built in data set <code>ToothGrowth</code>.</p>
+<pre class="r"><code>ToothGrowth$dose &lt;- as.factor(ToothGrowth$dose)
+head(ToothGrowth)</code></pre>
+<pre><code>##    len supp dose
+## 1  4.2   VC  0.5
+## 2 11.5   VC  0.5
+## 3  7.3   VC  0.5
+## 4  5.8   VC  0.5
+## 5  6.4   VC  0.5
+## 6 10.0   VC  0.5</code></pre>
+<pre class="r"><code>ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_boxplot()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<pre class="r"><code># adding points corresponding each measurements
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0.2))</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<pre class="r"><code># Use single color
+ggplot(ToothGrowth, aes(x=dose, y=len)) +
+  geom_boxplot(fill=&#39;#A4A4A4&#39;, color=&quot;black&quot;)+
+  theme_classic()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="r"><code># Change box plot colors by groups
+ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_boxplot()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
+<pre class="r"><code>#Use custom color palettes
+ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_boxplot()+ scale_fill_manual(values=c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;))</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+<div id="density-plot" class="section level4">
+<h4>Density Plot</h4>
+<pre class="r"><code># Creating dummy dataframe
+df &lt;- data.frame(
+  sex=factor(rep(c(&quot;F&quot;, &quot;M&quot;), each=200)),
+  weight=round(c(rnorm(200, mean=55, sd=5),
+                 rnorm(200, mean=65, sd=5)))
+  )
+head(df)</code></pre>
+<pre><code>##   sex weight
+## 1   F     47
+## 2   F     54
+## 3   F     54
+## 4   F     51
+## 5   F     53
+## 6   F     55</code></pre>
+<pre class="r"><code>ggplot(df, aes(x=weight)) + geom_density()</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<pre class="r"><code># Add mean line
+ggplot(df, aes(x=weight)) + geom_density() + geom_vline(aes(xintercept=mean(weight)),
+            color=&quot;blue&quot;, linetype=&quot;dashed&quot;, size=1)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-41-2.png" width="672" /></p>
+<pre class="r"><code># Change line color and fill color
+ggplot(df, aes(x=weight))+
+  geom_density(color=&quot;darkblue&quot;, fill=&quot;lightblue&quot;)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<pre class="r"><code># Change line type
+ggplot(df, aes(x=weight))+
+  geom_density(linetype=&quot;dashed&quot;)</code></pre>
+<p><img src="chapter1_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+</div>
 </div>
 </div>
 

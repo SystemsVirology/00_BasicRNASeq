@@ -108,7 +108,13 @@ chrVec=c("hai","friend","good morning") # a vector of strings
 print(chrVec)
 ```
 
-Note that, if we want to assign a character or a string it should be enclosed in quotes. Both single and double quotes will work.
+Note that, if we want to assign a character or a string it should be enclosed in quotes. Both single and double quotes will work. In case if you want to access individual element in a vector you can do that by specifying the element's index (position) in the vector. See the example below,
+
+```{r}
+chrVec=c("hai","friend","good morning")
+
+print(chrVec[1]) # it will print the first element in the vector
+```
 
 Let us now see if we can concatenate (or add) two character/string variable. For this purpose we need to use specific function **paste()**
 
@@ -146,6 +152,510 @@ df <- data.frame(
 print(df)
 ```
 
+If you use print(df), it will print all the rows in the data frame. If you simply write the dataframe and execute it will also print the entire dataframe. If your dataframe is big, contains many rows printing entire dataframe to the screen will be messy. So you can chose to print few lines for inspection purpose. You can try the function **head()** and **tail()**. Head will print first 5 lines and  tail will print last 5 lines by default. You can also specify the number of rows you want to be printed. Another way is use the function **View()** which will open the dataframe in another window.
+
+```{r}
+head(df)
+tail(df)
+head(df,5)
+View(df)
+```
+
+We can access the individual columns of the dataframe using **$** operator as below. Also same as accessing elements in vector by specifying the index.
+
+```{r}
+df$Name
+df$Age
+
+df[2]
+```
+
+Let us see another interesting operation using paste() function. In the dataframe I want to add one more column which is concatenation of Name and Age column.
+
+```{r}
+df$NewCoumm=paste(df$Name,df$Age,sep = "_")
+df
+```
 
 
+### Matrices
+
+A matrix in R is a two-dimensional data structure that stores elements of the same type (typically numeric, logical, or character) in a rectangular layout consisting of rows and columns. It is essentially a collection of vectors of the same length stacked together, where each column (or row) in the matrix is a vector.
+
+Key Characteristics of Matrices in R:
+- **Homogeneous Data Type**: All elements in a matrix must be of the same type.
+- **Two Dimensions**: Matrices have two dimensions—rows and columns.
+- **Indexing**: Elements in a matrix are accessed using a pair of indices: `[row, column]`.
+
+You can create a matrix using the `matrix()` function:
+
+```{r}
+# Create a matrix with 3 rows and 2 columns
+my_matrix <- matrix(data = c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2)
+
+# View the matrix
+print(my_matrix)
+```
+
+Accessing Elements in a Matrix
+Elements in a matrix can be accessed using the `[row, column]` notation:
+
+```{r}
+# Access the element in the first row and second column
+element <- my_matrix[1, 2]
+print(element)
+
+# Access all elements in the second row
+second_row <- my_matrix[2, ]
+print(second_row)
+
+# Access all elements in the first column
+first_column <- my_matrix[, 1]
+print(first_column)
+```
+
+Common Matrix Operations
+- **Transpose**: `t(my_matrix)` swaps the rows and columns of the matrix.
+- **Matrix Multiplication**: `%*%` is used for matrix multiplication.
+- **Element-wise Operations**: Basic arithmetic operations like `+`, `-`, `*`, and `/` are performed element-wise.
+
+Matrices are widely used in statistical computing, linear algebra, and data analysis in R due to their efficiency in handling two-dimensional numeric data.
+
+### List
+
+A list in R is a versatile data structure that can store a collection of elements of different types, including vectors, matrices, data frames, other lists, and more. Unlike vectors or matrices, which are homogeneous (all elements must be of the same type), a list is heterogeneous, meaning it can contain elements of different types and sizes.
+
+Key Characteristics of Lists in R:
+- **Heterogeneous**: Elements within a list can be of different types (e.g., numeric, character, logical, or even other lists).
+- **Ordered**: Lists are ordered collections, meaning the elements maintain the order in which they were added.
+- **Named or Unnamed**: List elements can be accessed by their position (index) or by a name if the list elements are named.
+
+**Creating a List**
+You can create a list using the `list()` function:
+
+```{r}
+# Create a list containing various elements
+my_list <- list(
+  name = "Alice",
+  age = 25,
+  scores = c(90, 85, 88),
+  is_student = TRUE,
+  address = list(street = "Main St", city = "Springfield")
+)
+
+# View the list
+print(my_list)
+```
+
+**Accessing Elements in a List**
+Elements in a list can be accessed using `[[ ]]` for positional indexing, `$` for named elements, or `[ ]` for subsetting:
+
+```{r}
+# Access the element by position
+first_element <- my_list[[1]]
+print(first_element)
+# Output: "Alice"
+
+# Access the element by name
+age_element <- my_list$age
+print(age_element)
+# Output: 25
+
+# Access a nested element (street in the address list)
+street_name <- my_list$address$street
+print(street_name)
+# Output: "Main St"
+
+# Access multiple elements as a sublist
+sublist <- my_list[c("name", "age")]
+print(sublist)
+```
+
+**Modifying a List**
+You can add, modify, or remove elements in a list:
+
+```{r}
+# Add a new element
+my_list$gender <- "Female"
+
+# Modify an existing element
+my_list$age <- 26
+
+# Remove an element
+my_list$scores <- NULL
+
+# View the updated list
+print(my_list)
+```
+
+**Use Cases for Lists**
+- **Flexible Data Storage**: Lists are useful for storing related but diverse types of data, such as the results of statistical tests (e.g., test statistic, p-value, and data used).
+- **Complex Data Structures**: Lists can be nested, allowing you to create complex data structures like trees, graphs, or data frames within lists.
+- **Function Returns**: Many R functions return their results as lists, especially when the output is multi-faceted or complex.
+
+Lists are one of the most powerful and flexible data structures in R, making them essential for a wide range of data manipulation and analysis tasks.
+
+## File operations
+
+We will do various file operations through the course. This involves writing data to a file and reading data from a file to R environment.
+
+Most, commonly used for reading contents of a file are **read.csv()**, **read.table()**, **read.delim()**
+
+Most, commonly used for writing data to a file are **write.csv**, **write.table**.
+
+Choice of the function is depend on the types of file we are reading (for reading) and types of data, how we want to store the data in a file (for writing)
+
+In this course we are mainly using plain text files either comma separated or tab separated. So mostly we will use **read.delim()** and **write.table** function. Using these we can handle both comma and tab separated files.
+
++ In comma separated file, the columns will be separated by a comma
++ In tab separated fle, the columns will be separted by a tab
+
+While using these function it is needed to specify the location of file (file path). The file path structure is different in different operating system. For example in Linux, path of a file resides in Desktop is **/home/YourUsername/Desktop/filename.txt** same in windows will be **C:\Users\YourUsername\Desktop\filename.txt**. In Mac it will be **/Users/YourUsername/Desktop/filename.txt**
+
+So in order avoid file path problems, we will do all the file operations in a dedicated folder, so that we need to only specify the filename only. 
+
+First create a folder somewhere comfortable. For this tutorial I am creating a folder named **Tutorial** in desktop. Then I will define the folder **Tutorial** as our working directory.
+
+```{r}
+setwd("~/Desktop/Tutorial") # In linux
+#setwd("C:\Users\YourUsername\Desktop\Tutorial") # in Windows. You need to replace your username
+#setwd("/Users/YourUsername/Desktop/Tutorial") # in Mac
+```
+
+After setting your working directory, check it has worked using the function **getwd()**. This function display the current working directory
+
+```{r,eval=FALSE}
+getwd()  # should display path to the Tutorial folder
+```
+
+```{r}
+# Create a data frame 
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie"),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# Now write the data frame to a file.
+write.table(df,file="TestFile.txt",sep="\t",quote = FALSE,row.names = FALSE)
+
+# Change the sep="\t" to sep="," for writing the dataframe to comma separated file
+
+write.table(df,file="TestFile.csv",sep=",",quote = FALSE,row.names = FALSE)
+
+```
+
+```{r}
+# Create a data frame 
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie"),
+  Age = c(25, 30, 35),
+  Height = c(5.5, 6.0, 5.8)
+)
+
+# Now write the data frame to a file.
+write.table(df,file="TestFile.txt",sep="\t",quote = FALSE,row.names = FALSE)
+
+# Change the sep="\t" to sep="," for writing the dataframe to comma separated file
+
+write.table(df,file="TestFile.txt",sep=",",quote = FALSE,row.names = FALSE)
+
+```
+
+```{r}
+dfNew=read.delim("TestFile.csv",sep=",")
+print(dfNew)
+
+dfNew=read.delim("TestFile.txt",sep="\t")
+print(dfNew)
+
+# If you want to define the first column as row name
+dfNew=read.delim("TestFile.txt",sep="\t",row.names = 1)
+print(dfNew)
+
+# Observe the differences
+```
+
+## Visualizations
+
+R offers a wide range of plotting capabilities, with the base R plotting system providing many functions for creating basic plots. Additionally, the **ggplot2** package is one of the most popular and powerful tools for creating advanced and customizable plots in R.
+
+### Common Plots in R
+
+1. **Base R Plotting System**:
+   - **Scatter Plot**: `plot(x, y)`
+   - **Line Plot**: `plot(x, y, type = "l")`
+   - **Histogram**: `hist(x)`
+   - **Bar Plot**: `barplot(height)`
+   - **Boxplot**: `boxplot(x)`
+   - **Pie Chart**: `pie(x)`
+   - **Heatmap**: `heatmap(x)`
+
+2. **`ggplot2` Package**:
+
+`ggplot2` is part of the Tidyverse and offers a more consistent and powerful system for creating complex graphics. In the course we use ggplot mainly to generate all the figures.
+
+### R packages
+ggplot is a package in R. A package in R is a collection of functions, data, and documentation bundled together, which extends the functionality of R. Packages provide a way to share code and data with others and to reuse code for specific tasks, such as data manipulation, statistical analysis, visualization, and more.
+
+### Key Features of an R Package
+
+- **Functions**: Packages contain functions that perform specific tasks or calculations. For example, the `ggplot2` package provides functions for creating advanced graphics.
+- **Data**: Packages can include datasets that are used for examples, testing, or teaching. For instance, the `datasets` package contains datasets like `iris` and `mtcars`.
+- **Documentation**: Packages include documentation that describes the functions and datasets they contain, often including examples of how to use them.
+- **Dependencies**: Some packages depend on other packages. R will automatically install and load these dependencies when you install a package.
+
+### Using Packages in R
+1. **Installing a Package**: You can install a package from CRAN (Comprehensive R Archive Network) using the `install.packages()` function.
+
+```{r, eval=FALSE}
+   install.packages("ggplot2")
+```
+
+2. **Loading a Package**: After installation, you need to load the package into your R session using the `library()` function.
+
+```{r,eval=FALSE}
+   library(ggplot2)
+```
+
+3. **Using Package Functions**: Once a package is loaded, you can use its functions directly.
+```{r,eval=FALSE}
+ggplot(data, aes(x, y)) + geom_point()
+```
+
+### Types of R Packages
+
+- **Base Packages**: These come pre-installed with R and include basic functions and datasets (e.g., `stats`, `utils`, `datasets`).
+- **Recommended Packages**: These are commonly used packages that are often installed with R but can also be installed separately (e.g., `MASS`, `lattice`).
+- **Contributed Packages**: These are developed by the R community and can be installed from CRAN, GitHub, or other repositories (e.g., `dplyr`, `shiny`, `tidyverse`).
+
+### Popular R Packages
+- **Data Manipulation**: `dplyr`, `data.table`
+- **Data Visualization**: `ggplot2`, `plotly`
+- **Machine Learning**: `caret`, `randomForest`
+- **Statistical Modeling**: `lme4`, `MASS`
+- **Reporting and Web Applications**: `shiny`, `rmarkdown`
+
+Packages are essential in R, allowing users to perform complex analyses, create stunning visualizations, and automate tasks with minimal effort. The vast ecosystem of R packages is one of the key reasons for R's popularity in data science and statistical computing.
+
+### ggplot2
+ggplot2 is a R package which provides several functionalities make customizable and quality figures. We can try to make different plots using ggplote package.
+
+#### Scatter Plot
+
+We can use a built in dataset provided by R, for practising. `mtcars` is a built-in dataset. It is a dataframe. We can first inspect the dataframe.
+
+```{r}
+head(mtcars)
+```
+
+Now we can use the data set to generate a x-y scatter plot. Observe the inputs given in the ggplot function. First we give dataframe, then we define the aesthetics using the `aes()` function. In aesthetics we will input what should be in x and y axis. Then to generate scatter plot we will add the corresponding `geometric` / `geom` object. For scatter plot it is `geom_point()`.
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+```
+
+Let us now do some customization on this plot. We will try increasing the size of point and change color
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point(size=5,color="red")
+```
+
+We can also set the size according an input numerical value, for example the measurements in the column `qsec`. This should be defined in the aesthetics.
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg,size=qsec)) + geom_point(color="red")
+```
+
+ggplot provide further customizable options. `Theme()` is a function using which we can do several kinds of customization to the plot.
+
+In the `ggplot2` package in R, the `theme()` function is used to modify and customize the non-data components of your plot, such as text, gridlines, background, and more. The term "theme" refers to the overall appearance or "look and feel" of the plot.
+
+#### Expansion of `theme()`
+- **T**: Text
+- **H**: Headings
+- **E**: Elements
+- **M**: Margins and spacing
+- **E**: Everything else (general appearance settings)
+
+#### What Does `theme()` Do?
+
+The `theme()` function allows you to control the appearance of almost every aspect of your plot that isn't directly related to the data itself. This includes:
+
+- **Text Elements**: Customize the appearance of all text in the plot.
+  - `element_text()`: Adjust font size, color, face (bold, italic), angle, etc.
+  - Example: `axis.title = element_text(size = 14, face = "bold", color = "blue")`
+
+- **Background Elements**: Control the background color and borders.
+  - `element_rect()`: Modify rectangular elements like plot background and panel background.
+  - Example: `panel.background = element_rect(fill = "lightgray")`
+
+- **Gridlines and Axis Lines**: Adjust the appearance of gridlines and axis lines.
+  - `element_line()`: Customize line properties like color, size, and type.
+  - Example: `panel.grid.major = element_line(color = "gray", linetype = "dashed")`
+
+- **Legend**: Customize the position, background, and text in the legend.
+  - `legend.position`: Control where the legend appears on the plot.
+  - Example: `legend.position = "bottom"`
+
+- **Margins and Spacing**: Control the spacing around and within plot elements.
+  - `plot.margin`: Adjust the margins around the entire plot.
+  - Example: `plot.margin = margin(10, 10, 10, 10)`
+
+#### Example of Using `theme()`
+
+```{r}
+ggplot(mtcars, aes(x=wt, y=mpg,size=qsec)) + geom_point(color="red") +
+  theme(
+    axis.title = element_text(size = 14, face = "bold", color = "darkgreen"),
+    axis.text = element_text(size = 12, color = "black"),
+    panel.background = element_rect(fill = "lightgray"),
+    panel.grid.major = element_line(color = "white"),
+    panel.grid.minor = element_line(color = "lightblue"),
+    legend.position = "bottom",
+    plot.margin = margin(20, 20, 20, 20)
+  )
+```
+
+check all functionalities of provided by `theme()` [here](https://ggplot2.tidyverse.org/reference/theme.html)
+
+#### Line Plot
+We need to use the geom object `geom_line()` to make line plot.
+
+```{r}
+# Create a dummy dataset for practising
+df <- data.frame(dose=c("D0.5", "D1", "D2"),
+                len=c(4.2, 10, 29.5))
+head(df)
+```
+
+```{r}
+library(ggplot2)
+# Basic line plot
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line()
+
+# Change the line type and also adding point notice that we are using geom_point() to add points
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line(linetype = "dashed")+
+  geom_point()
+# Change the color and increase size of the line
+
+ggplot(data=df, aes(x=dose, y=len, group=1)) +
+  geom_line(color="red",linewidth=3)+
+  geom_point()
+```
+
+
+#### Histogram
+Using the geom object `geom_histogram()`
+
+```{r}
+# Creating a dummy dataframe
+df <- data.frame(
+  sex=factor(rep(c("F", "M"), each=200)),
+  weight=round(c(rnorm(200, mean=55, sd=5), rnorm(200, mean=65, sd=5)))
+  )
+head(df)
+```
+
+```{r}
+library(ggplot2)
+# Basic histogram
+ggplot(df, aes(x=weight)) + geom_histogram()
+# Change the width of bins
+ggplot(df, aes(x=weight)) + 
+  geom_histogram(binwidth=1)
+# Change colors
+ggplot(df, aes(x=weight)) + 
+  geom_histogram(color="black", fill="white")
+```
+
+
+#### Bar Plot
+Using the geom object `geom_bar()`
+
+```{r}
+# Creating a dummy dataframe
+
+df <- data.frame(dose=c("D0.5", "D1", "D2"),
+                len=c(4.2, 10, 29.5))
+head(df)
+```
+
+```{r}
+# Basic barplot
+ggplot(data=df, aes(x=dose, y=len)) + geom_bar(stat="identity")
+
+# Horizontal bar plot
+ggplot(data=df, aes(x=dose, y=len)) + geom_bar(stat="identity") + coord_flip()
+```
+
+#### Boxplot
+Using the geom object `geom_boxplot()`. We can make use of a built in data set `ToothGrowth`.
+
+```{r}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+head(ToothGrowth)
+```
+
+```{r}
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_boxplot()
+```
+
+```{r}
+# adding points corresponding each measurements
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0.2))
+```
+
+```{r}
+# Use single color
+ggplot(ToothGrowth, aes(x=dose, y=len)) +
+  geom_boxplot(fill='#A4A4A4', color="black")+
+  theme_classic()
+# Change box plot colors by groups
+ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_boxplot()
+```
+
+```{r}
+#Use custom color palettes
+ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_boxplot()+ scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+
+#### Density Plot
+
+```{r}
+# Creating dummy dataframe
+df <- data.frame(
+  sex=factor(rep(c("F", "M"), each=200)),
+  weight=round(c(rnorm(200, mean=55, sd=5),
+                 rnorm(200, mean=65, sd=5)))
+  )
+head(df)
+```
+
+```{r}
+ggplot(df, aes(x=weight)) + geom_density()
+
+# Add mean line
+ggplot(df, aes(x=weight)) + geom_density() + geom_vline(aes(xintercept=mean(weight)),
+            color="blue", linetype="dashed", size=1)
+```
+
+```{r}
+# Change line color and fill color
+ggplot(df, aes(x=weight))+
+  geom_density(color="darkblue", fill="lightblue")
+# Change line type
+ggplot(df, aes(x=weight))+
+  geom_density(linetype="dashed")
+```
 
