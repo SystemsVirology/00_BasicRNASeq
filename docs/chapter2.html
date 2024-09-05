@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Anoop Ambikan" />
 
 
-<title>Chapter2</title>
+<title>Transcriptomics Analysis in R</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -30,8 +29,10 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -217,10 +218,70 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
 
 
 
@@ -230,6 +291,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -250,7 +321,7 @@ $(document).ready(function () {
   <a href="preCourse.html">Pre-course</a>
 </li>
 <li>
-  <a href="chapter2.html">System configuration</a>
+  <a href="chapter3.html">System configuration</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -264,9 +335,6 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="chapter2.html">Chapter 2</a>
-    </li>
-    <li>
-      <a href="chapter3.html">Chapter 3</a>
     </li>
   </ul>
 </li>
@@ -283,49 +351,362 @@ $(document).ready(function () {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Chapter2</h1>
-<h4 class="author">Anoop Ambikan</h4>
-<h4 class="date">8/20/2024</h4>
+<h1 class="title toc-ignore">Transcriptomics Analysis in R</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com"
-class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<p>The downstream analysis of transcriptomics data mainly consists of
+four steps and they are</p>
+<ol style="list-style-type: decimal">
+<li>Data Normalization</li>
+<li>Sample distribution assessment</li>
+<li>Differential gene expression analysis</li>
+<li>Gene-set enrichment analysis or functional analysis</li>
+</ol>
+<p>Further, we need to make visualizations of the results
+identified.</p>
+<p>As explained in the course overview, we will use transcriptomics data
+generated from SARS-Cov2 infected human blood samples and COVID-19
+negative blood samples. Then we will compare the data (COVID-19 positive
+vs COVID-19 negative) to find genes regulated due to the infection and
+their functions in human.</p>
+<p>As a first step, let us familiarize with the study design and the
+data.</p>
+<div id="study-design" class="section level2">
+<h2>Study design</h2>
+<p>We are re-using the data from a study published by the Systems
+Virology lab at Karolinska. The study aimed to investigate the metabolic
+signatures altered in humans upon COVID19. More details of the study can
+be found <a href="https://pubmed.ncbi.nlm.nih.gov/35933992/">here</a>.
+We are using the data of randomly selected 12 samples from COVID-19
+negative and COVID-19 positive individuals. The data can be obtained
+from the this <a
+href="https://github.com/SystemsVirology/00_BasicRNASeq/tree/main/Data">link</a></p>
+<p>There you can see three files,</p>
+<ol style="list-style-type: decimal">
+<li><strong>Design.txt</strong> : Shows the sample ID and corresponding
+information such as cohort, age, gender &amp; BMI</li>
+<li><strong>Raw_Read_Count.txt</strong> : The read count table of all
+genes from all 12 samples. Columns are the sample IDs and rows are
+genes. There you can see Ensembl IDs of genes. The count data was
+generated using the tool <code>FeatureCounts</code> after alignment
+using <code>STAR</code></li>
+<li><strong>TPM_Count.txt</strong> : Transcrpts per million reads (TPM)
+normalized read counts.</li>
+</ol>
+<p>Download the three files and keep them inside your project folder.
+For all this tutorial I am keeping a folder named
+<code>COVID_RNASeq</code> as my project folder.</p>
+<p>To download the files, you can click on each files, then it will be
+open in new window. On the right top corner you can find download
+link.</p>
+<p>In the project, we are studying SARS-Cov2 viral infection. It is
+known that viral infection can trigger several antiviral and
+immune-syatem pathways in the host as well as metabolic pathways to
+generate energy. So here we are aim to find the anti-viral,
+immune-system &amp; metabolic pathways altered in response to COVID-19
+disease in humans.</p>
+<div id="the-data" class="section level3">
+<h3>The data</h3>
+<p>As a first step lets have a look at the count data. As we learned,
+the count data is the number of reads originate from each gene. It will
+be whole number since it is count of something. The data will consists
+of different types of genes such as protein coding, non-coding, lincRNAs
+etc. The columns are sample IDs and row names are Gene IDs. First we
+will convert gene IDs to gene names. Then we will select only
+protein-coding genes. We will restrict all our downstream analysis to
+protein-coding genes. You can select the gene biotypes based on your
+objective.</p>
+<pre class="r"><code>setwd(&quot;~/Desktop/Course/COVID_RNASeq/&quot;) # You need to execute this line to set your project folder. Once for each R instance</code></pre>
+<pre class="r"><code>library(biomaRt)  # load the package to R environment to use its functionalities.
+
+Count=read.delim(&quot;Raw_Read_Count.txt&quot;)
+dim(Count) # this shows dimension of the data frame.
+
+# creates a data base contaning the information about ensembl genes.
+ensembl &lt;- useEnsembl(biomart = &quot;genes&quot;, dataset = &quot;hsapiens_gene_ensembl&quot;) 
+
+# this step fetch gene names (hgnc_symbol) and biotype of the inputted gene IDs
+GeneInfo &lt;- getBM(attributes=c(&quot;ensembl_gene_id&quot;,&quot;hgnc_symbol&quot;,&quot;gene_biotype&quot;), filters = &quot;ensembl_gene_id&quot;, values = Count$Ensembl_ID, mart = ensembl) 
+
+dim(GeneInfo)
+
+names(GeneInfo)[names(GeneInfo) == &quot;ensembl_gene_id&quot;] &lt;- &quot;Ensembl_ID&quot;
+# adding the fetched data to our original dataframe
+MergedData=merge(Count,GeneInfo,by = &quot;Ensembl_ID&quot;,all.x = FALSE)
+
+# counting number of genes from each biotype
+library(dplyr)
+MergedData %&gt;% 
+  group_by(gene_biotype) %&gt;%
+  summarise(Count = length(gene_biotype))
+
+
+# Lets save the new count data with gene information
+write.table(MergedData,file=&quot;CountData_GeneNames.txt&quot;,sep=&quot;\t&quot;,col.names = NA,quote = FALSE)</code></pre>
+<pre class="r"><code># Selecting count data for protein coding genes. Using subset() function
+
+ProtCoding=subset(MergedData, gene_biotype==&quot;protein_coding&quot;)
+dim(ProtCoding)
+head(ProtCoding)
+
+# We need to make a clean file for further analysis. The column should be sample Ids and rows should genes. Currently we have additional columns hgnc_symbol, gene_biotype. So we are going to correct it. Here we are defining new row names in the format &quot;EnesebleID_GeneName&quot; and delete other columns.
+
+ProtCoding$ID_Name = paste(ProtCoding$Ensembl_ID, ProtCoding$hgnc_symbol, sep = &quot;_&quot;)
+
+# Now make the new column &quot;ID_Name&quot; as the row names and delete the unwanted &quot;hgnc_symbol,gene_biotype,ensembl_gene_id&quot;.
+
+rownames(ProtCoding) = ProtCoding$ID_Name
+ProtCoding$Ensembl_ID = NULL
+ProtCoding$ID_Name = NULL
+ProtCoding$hgnc_symbol = NULL
+ProtCoding$gene_biotype = NULL
+
+# Lets have a look the final data frame.
+head(ProtCoding)
+
+# We are good to go. Lets save the final table too
+write.table(ProtCoding,file=&quot;ProtCodingCount.txt&quot;,sep=&quot;\t&quot;,col.names = NA,quote = FALSE)</code></pre>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
+</div>
+<div id="data-normalization" class="section level2">
+<h2>Data Normalization</h2>
+<p>Normalization of transcriptomics data (raw read count) is crucial
+before performing downstream analyses like PCA (Principal Component
+Analysis) and UMAP (Uniform Manifold Approximation and Projection). PCA
+&amp; UMAP are used to study the sample distribution. Different
+normalization methods address various aspects of the data, such as
+library size differences, variability in gene expression, and technical
+biases. Most commonly used normalization methods are log2 scaled counts
+per million reads (log2 CPM), transcript per million reads (TPM),
+Trimmed Mean of M-values (TMM) and Variance Stabilizing Transformation
+(VST).</p>
+<div id="log2-cpm" class="section level3">
+<h3>log2 CPM</h3>
+<p>This normalization technique adjusts for differences in sequencing
+depth across samples by converting raw counts into counts per million
+reads, followed by a logarithmic transformation to stabilize variance.
+Specifically, it accounts for variations in library size by scaling the
+counts relative to the total number of reads in each sample, and it
+normalizes the data to a common scale, making it easier to compare gene
+expression levels across samples.</p>
+<p>The log2 transformation further mitigates issues with skewed data
+distributions and reduces the influence of extreme values, allowing for
+more balanced statistical analyses. This method is particularly useful
+for downstream applications like Principal Component Analysis (PCA) and
+clustering, where variance stabilization and comparability across
+samples are crucial for accurate and meaningful results.</p>
+<p>We are using funtions provided by the R packages <code>Biobase</code>
+and <code>edgeR</code></p>
+<pre class="r"><code>library(Biobase)   # Loading the package
+library(edgeR)     # Loading the package
+
+count=read.delim(&quot;ProtCodingCount.txt&quot;,row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+des=read.delim(&quot;Design.txt&quot;,row.names = 1)
+expSet=ExpressionSet(countX, phenoData=AnnotatedDataFrame(data=des)) # Creating a object of specific format.
+expSet &lt;- expSet[rowSums(exprs(expSet)) != 0, ] # to remove genes having zeros in all samples
+log2cpm &lt;- cpm(exprs(expSet), log = TRUE)
+
+write.table(log2cpm,file=&quot;Log2CPM_ProtCoding.txt&quot;,sep=&quot;\t&quot;,quote = FALSE,col.names = NA)</code></pre>
+</div>
+<div id="tpm" class="section level3">
+<h3>TPM</h3>
+<p>TPM normalization adjusts for both sequencing depth and gene length,
+offering a way to compare gene expression levels across samples and
+genes. This method first normalizes read counts by the length of each
+gene, converting them to a per-kilobase basis, and then scales these
+values to a common scale where the total expression in each sample sums
+to one million.</p>
+<p>This approach accounts for differences in library sizes and ensures
+that gene expression values are comparable across samples, regardless of
+the sequencing depth. The TPM normalization method also facilitates
+meaningful comparisons between genes of varying lengths, as it removes
+length bias from the raw counts. This makes TPM particularly effective
+for analyzing and visualizing gene expression profiles, providing a
+consistent basis for downstream analyses like differential expression
+studies and clustering, where balanced representation across samples and
+genes is essential.</p>
+<p>TPM normalization cannot be performed directly on raw read count,
+accurately. We need to perform read alingment at the resolution
+individual transcript for TPM computation. Note that, here we performed
+alignment against each gene, not transcripts. There are specific tools
+that provide accurate computation of TPM values. Here it is already
+performed using the tool <a
+href="https://pachterlab.github.io/kallisto/about">kallisto</a> and data
+is availble to download (TPM_Count.txt)</p>
+<p>So we just subset protein coding genes from the data set.</p>
+<pre class="r"><code>library(biomaRt)  # load the package to R environment to use its functionalities.
+
+Count=read.delim(&quot;TPM_Count.txt&quot;)
+dim(Count) # this shows dimension of the data frame.
+
+# creates a data base contaning the information about ensembl genes.
+ensembl &lt;- useEnsembl(biomart = &quot;genes&quot;, dataset = &quot;hsapiens_gene_ensembl&quot;) 
+
+# this step fetch gene names (hgnc_symbol) and biotype of the inputted gene IDs
+GeneInfo &lt;- getBM(attributes=c(&quot;ensembl_gene_id&quot;,&quot;hgnc_symbol&quot;,&quot;gene_biotype&quot;), filters = &quot;ensembl_gene_id&quot;, values = Count$Ensembl_ID, mart = ensembl) 
+
+dim(GeneInfo)
+
+names(GeneInfo)[names(GeneInfo) == &quot;ensembl_gene_id&quot;] &lt;- &quot;Ensembl_ID&quot;
+# adding the fetched data to our original dataframe
+MergedData=merge(Count,GeneInfo,by = &quot;Ensembl_ID&quot;,all.x = FALSE)
+
+# Lets save the new count data with gene information
+write.table(MergedData,file=&quot;TPM_GeneNames.txt&quot;,sep=&quot;\t&quot;,col.names = NA,quote = FALSE)
+
+# Selecting count data for protein coding genes. Using subset() function
+
+ProtCoding=subset(MergedData, gene_biotype==&quot;protein_coding&quot;)
+
+ProtCoding$ID_Name = paste(ProtCoding$Ensembl_ID, ProtCoding$hgnc_symbol, sep = &quot;_&quot;)
+
+# Now make the new column &quot;ID_Name&quot; as the row names and delete the unwanted &quot;hgnc_symbol,gene_biotype,ensembl_gene_id&quot;.
+
+rownames(ProtCoding) = ProtCoding$ID_Name
+ProtCoding$Ensembl_ID = NULL
+ProtCoding$ID_Name = NULL
+ProtCoding$hgnc_symbol = NULL
+ProtCoding$gene_biotype = NULL
+
+# Lets have a look the final data frame.
+head(ProtCoding)
+
+# We are good to go. Lets save the final table too
+write.table(ProtCoding,file=&quot;ProtCodingTPM.txt&quot;,sep=&quot;\t&quot;,col.names = NA,quote = FALSE)</code></pre>
+</div>
+<div id="tmm" class="section level3">
+<h3>TMM</h3>
+<p>TMM (Trimmed Mean of M-values) normalization is a method used in
+RNA-seq data analysis to correct for compositional biases and
+differences in library sizes across samples. It works by calculating
+normalization factors based on the trimmed mean of log-ratios of gene
+expression between samples, which mitigates the impact of extreme values
+and outliers. This ensures that gene expression levels are comparable
+across samples, making TMM particularly effective for accurate
+differential expression analysis and reducing biases due to varying
+library compositions.</p>
+<p>Here also we are using function provided by R package
+<code>edgeR</code></p>
+<pre class="r"><code>library(edgeR)
+
+count=read.delim(&quot;ProtCodingCount.txt&quot;,row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+
+# Create a DGEList object
+dge &lt;- DGEList(counts = countX)
+
+# Calculate normalization factors using TMM
+dge &lt;- calcNormFactors(dge)
+
+# Get normalized counts
+TMM_counts &lt;- cpm(dge, normalized.lib.sizes = TRUE)
+
+# Save the data to a file
+write.table(TMM_counts,file=&quot;TMM_ProtCodingCount.txt&quot;,sep=&quot;\t&quot;,quote = FALSE,col.names = NA)</code></pre>
+</div>
+<div id="vst" class="section level3">
+<h3>VST</h3>
+<p>VST (Variance Stabilizing Transformation) normalization transforms
+RNA-seq data to stabilize variance across gene expression levels. By
+applying a log transformation and adjusting for variance, VST makes data
+more comparable and suitable for downstream analyses like PCA and
+clustering, reducing the impact of variability in low-count genes.</p>
+<p>We are using function provided by R package <code>DESeq2</code></p>
+<pre class="r"><code>library(DESeq2)
+
+count=read.delim(&quot;ProtCodingCount.txt&quot;,row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+des=read.delim(&quot;Design.txt&quot;,row.names = 1)
+
+# Create a DESeqDataSet object
+dds &lt;- DESeqDataSetFromMatrix(countData = countX, colData = des, design = ~ Group)
+
+# Perform VST normalization
+vsd &lt;- vst(dds, blind = FALSE)
+
+# Access the VST transformed data
+VST_counts &lt;- assay(vsd)
+
+write.table(VST_counts,file=&quot;VST_ProtCodingCount.txt&quot;,sep=&quot;\t&quot;,quote = FALSE,col.names = NA)</code></pre>
+</div>
+</div>
+<div id="sample-distribution" class="section level2">
+<h2>Sample distribution</h2>
+<p>Sample distribution estimation involves analyzing and summarizing the
+underlying distribution of data points within a dataset. Accurate
+estimation of sample distributions helps in identifying patterns,
+detecting outliers, and ensuring that the dimensionality reduction
+effectively captures the intrinsic relationships between data points. In
+PCA, it helps in determining the variance explained by each principal
+component, while in UMAP, it aids in preserving the local and global
+structure of the data during projection to lower dimensions. Proper
+distribution estimation enhances the reliability of these analyses by
+providing a clear picture of data spread and density.</p>
+<div id="pca" class="section level3">
+<h3>PCA</h3>
+<p>Principal Component Analysis (PCA) is a dimensionality reduction
+technique that transforms high-dimensional data into a lower-dimensional
+space while retaining the most variance. It identifies the principal
+components—orthogonal vectors that capture the maximum variance in the
+data. PCA simplifies the dataset by projecting it onto these principal
+components, making it easier to visualize and analyze complex data
+patterns.</p>
+<p>We use the R package <code>PCAtools</code></p>
+<pre class="r"><code>library(PCAtools)
+
+# First let&#39;s use TPM data to create PCA
+TPMprot=read.delim(&quot;ProtCodingTPM.txt&quot;,row.names = 1,check.names = FALSE)
+Design=read.delim(&quot;Design.txt&quot;,row.names = 1)
+p &lt;- PCAtools::pca((TPMprot), metadata = Design, removeVar = 0.1,scale = TRUE)
+
+# Check the percentage variance captured by each PCs. The sum of variances should be 100.
+as.data.frame(p$variance)</code></pre>
+<pre><code>##        p$variance
+## PC1  4.651474e+01
+## PC2  8.598058e+00
+## PC3  6.869512e+00
+## PC4  5.621716e+00
+## PC5  4.553358e+00
+## PC6  3.743865e+00
+## PC7  3.162258e+00
+## PC8  3.038319e+00
+## PC9  2.519139e+00
+## PC10 2.264404e+00
+## PC11 1.945224e+00
+## PC12 1.821220e+00
+## PC13 1.485242e+00
+## PC14 1.271704e+00
+## PC15 1.109436e+00
+## PC16 9.727418e-01
+## PC17 8.728597e-01
+## PC18 8.410931e-01
+## PC19 7.453625e-01
+## PC20 7.363045e-01
+## PC21 5.292819e-01
+## PC22 4.129987e-01
+## PC23 3.711604e-01
+## PC24 5.037529e-28</code></pre>
+<pre class="r"><code># Since the first two PCs captured most of the variances in the data. It should be enough to access the sample distribution. We can plot the PC1 in x-axis and PC2 in the y-axis.
+PC_Cord=p$rotated
+PC_Cord$Group=Design$Group
+
+ggplot(PC_Cord, aes(x=PC1, y=PC2,colour = Group)) + geom_point(size=3)</code></pre>
+<p><img src="chapter2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="umap" class="section level3">
+<h3>UMAP</h3>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -357,12 +738,36 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+
 <script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
 });
 </script>
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -1,26 +1,277 @@
 ---
-title: "Chapter2"
-author: "Anoop Ambikan"
-date: "8/20/2024"
-output: html_document
+title: "Transcriptomics Analysis in R"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: none
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+The downstream analysis of transcriptomics data mainly consists of four steps and they are
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+1. Data Normalization
+2. Sample distribution assessment
+3. Differential gene expression analysis
+4. Gene-set enrichment analysis or functional analysis
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Further, we need to make visualizations of the results identified.
 
-```{r cars}
-summary(cars)
+As explained in the course overview, we will use transcriptomics data generated from SARS-Cov2 infected 
+human blood samples and COVID-19 negative blood samples. Then we will compare the data (COVID-19 positive vs COVID-19 negative) to find genes regulated due to the infection and their functions in human.
+
+As a first step, let us familiarize with the study design and the data.
+
+## Study design
+
+We are re-using the data from a study published by the Systems Virology lab at Karolinska. The study aimed to investigate the metabolic signatures altered in humans upon COVID19. More details of the study can be found [here](https://pubmed.ncbi.nlm.nih.gov/35933992/). We are using the data of randomly selected 12 samples from COVID-19 negative and COVID-19 positive individuals. The data can be obtained from the this [link](https://github.com/SystemsVirology/00_BasicRNASeq/tree/main/Data)
+
+There you can see three files,
+
+1. **Design.txt** : Shows the sample ID and corresponding information such as cohort, age, gender & BMI
+2. **Raw_Read_Count.txt** : The read count table of all genes from all 12 samples. Columns are the sample IDs and rows are genes. There you can see Ensembl IDs of genes. The count data was generated using the tool `FeatureCounts` after alignment using `STAR`
+3. **TPM_Count.txt** : Transcrpts per million reads (TPM) normalized read counts.
+
+Download the three files and keep them inside your project folder. For all this tutorial I am keeping a folder named `COVID_RNASeq` as my project folder. 
+
+To download the files, you can click on each files, then it will be open in new window. On the right top corner you can find download link.
+
+In the project, we are studying SARS-Cov2 viral infection. It is known that viral infection can trigger several antiviral and immune-syatem pathways in the host as well as metabolic pathways to generate energy. So here we are aim to find the anti-viral, immune-system & metabolic pathways altered in response to COVID-19 disease in humans.
+
+### The data
+
+As a first step lets have a look at the count data. As we learned, the count data is the number of reads originate from each gene. It will be whole number since it is count of something. The data will consists of different types of genes such as protein coding, non-coding, lincRNAs etc. The columns are sample IDs and row names are Gene IDs. First we will convert gene IDs to gene names. Then we will select only protein-coding genes. We will restrict all our downstream analysis to protein-coding genes. You can select the gene biotypes based on your objective.
+
+```{r,eval=FALSE}
+setwd("~/Desktop/Course/COVID_RNASeq/") # You need to execute this line to set your project folder. Once for each R instance
 ```
 
-## Including Plots
+```{r,eval=FALSE}
+library(biomaRt)  # load the package to R environment to use its functionalities.
 
-You can also embed plots, for example:
+Count=read.delim("Raw_Read_Count.txt")
+dim(Count) # this shows dimension of the data frame.
+
+# creates a data base contaning the information about ensembl genes.
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl") 
+
+# this step fetch gene names (hgnc_symbol) and biotype of the inputted gene IDs
+GeneInfo <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol","gene_biotype"), filters = "ensembl_gene_id", values = Count$Ensembl_ID, mart = ensembl) 
+
+dim(GeneInfo)
+
+names(GeneInfo)[names(GeneInfo) == "ensembl_gene_id"] <- "Ensembl_ID"
+# adding the fetched data to our original dataframe
+MergedData=merge(Count,GeneInfo,by = "Ensembl_ID",all.x = FALSE)
+
+# counting number of genes from each biotype
+library(dplyr)
+MergedData %>% 
+  group_by(gene_biotype) %>%
+  summarise(Count = length(gene_biotype))
+
+
+# Lets save the new count data with gene information
+write.table(MergedData,file="CountData_GeneNames.txt",sep="\t",col.names = NA,quote = FALSE)
+
+```
+
+```{r,eval=FALSE}
+# Selecting count data for protein coding genes. Using subset() function
+
+ProtCoding=subset(MergedData, gene_biotype=="protein_coding")
+dim(ProtCoding)
+head(ProtCoding)
+
+# We need to make a clean file for further analysis. The column should be sample Ids and rows should genes. Currently we have additional columns hgnc_symbol, gene_biotype. So we are going to correct it. Here we are defining new row names in the format "EnesebleID_GeneName" and delete other columns.
+
+ProtCoding$ID_Name = paste(ProtCoding$Ensembl_ID, ProtCoding$hgnc_symbol, sep = "_")
+
+# Now make the new column "ID_Name" as the row names and delete the unwanted "hgnc_symbol,gene_biotype,ensembl_gene_id".
+
+rownames(ProtCoding) = ProtCoding$ID_Name
+ProtCoding$Ensembl_ID = NULL
+ProtCoding$ID_Name = NULL
+ProtCoding$hgnc_symbol = NULL
+ProtCoding$gene_biotype = NULL
+
+# Lets have a look the final data frame.
+head(ProtCoding)
+
+# We are good to go. Lets save the final table too
+write.table(ProtCoding,file="ProtCodingCount.txt",sep="\t",col.names = NA,quote = FALSE)
+
+```
+
+
+## Data Normalization
+
+Normalization of transcriptomics data (raw read count) is crucial before performing downstream analyses like PCA (Principal Component Analysis) and UMAP (Uniform Manifold Approximation and Projection). PCA & UMAP are used to study the sample distribution. Different normalization methods address various aspects of the data, such as library size differences, variability in gene expression, and technical biases. Most commonly used normalization methods are log2 scaled counts per million reads (log2 CPM), transcript per million reads (TPM), Trimmed Mean of M-values (TMM) and Variance Stabilizing Transformation (VST).
+
+### log2 CPM
+
+This normalization technique adjusts for differences in sequencing depth across samples by converting raw counts into counts per million reads, followed by a logarithmic transformation to stabilize variance. Specifically, it accounts for variations in library size by scaling the counts relative to the total number of reads in each sample, and it normalizes the data to a common scale, making it easier to compare gene expression levels across samples.
+
+The log2 transformation further mitigates issues with skewed data distributions and reduces the influence of extreme values, allowing for more balanced statistical analyses. This method is particularly useful for downstream applications like Principal Component Analysis (PCA) and clustering, where variance stabilization and comparability across samples are crucial for accurate and meaningful results.
+
+We are using funtions provided by the R packages `Biobase` and `edgeR`
+
+```{r,eval=FALSE}
+library(Biobase)   # Loading the package
+library(edgeR)     # Loading the package
+
+count=read.delim("ProtCodingCount.txt",row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+des=read.delim("Design.txt",row.names = 1)
+expSet=ExpressionSet(countX, phenoData=AnnotatedDataFrame(data=des)) # Creating a object of specific format.
+expSet <- expSet[rowSums(exprs(expSet)) != 0, ] # to remove genes having zeros in all samples
+log2cpm <- cpm(exprs(expSet), log = TRUE)
+
+write.table(log2cpm,file="Log2CPM_ProtCoding.txt",sep="\t",quote = FALSE,col.names = NA)
+```
+
+### TPM
+
+TPM normalization adjusts for both sequencing depth and gene length, offering a way to compare gene expression levels across samples and genes. This method first normalizes read counts by the length of each gene, converting them to a per-kilobase basis, and then scales these values to a common scale where the total expression in each sample sums to one million. 
+
+This approach accounts for differences in library sizes and ensures that gene expression values are comparable across samples, regardless of the sequencing depth. The TPM normalization method also facilitates meaningful comparisons between genes of varying lengths, as it removes length bias from the raw counts. This makes TPM particularly effective for analyzing and visualizing gene expression profiles, providing a consistent basis for downstream analyses like differential expression studies and clustering, where balanced representation across samples and genes is essential.
+
+TPM normalization cannot be performed directly on raw read count, accurately. We need to perform read alingment at the resolution individual transcript for TPM computation. Note that, here we performed alignment against each gene, not transcripts. There are specific tools that provide accurate computation of TPM values. Here it is already performed using the tool [kallisto](https://pachterlab.github.io/kallisto/about) and data is availble to download (TPM_Count.txt)
+
+So we just subset protein coding genes from the data set.
+
+```{r,eval=FALSE}
+library(biomaRt)  # load the package to R environment to use its functionalities.
+
+Count=read.delim("TPM_Count.txt")
+dim(Count) # this shows dimension of the data frame.
+
+# creates a data base contaning the information about ensembl genes.
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl") 
+
+# this step fetch gene names (hgnc_symbol) and biotype of the inputted gene IDs
+GeneInfo <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol","gene_biotype"), filters = "ensembl_gene_id", values = Count$Ensembl_ID, mart = ensembl) 
+
+dim(GeneInfo)
+
+names(GeneInfo)[names(GeneInfo) == "ensembl_gene_id"] <- "Ensembl_ID"
+# adding the fetched data to our original dataframe
+MergedData=merge(Count,GeneInfo,by = "Ensembl_ID",all.x = FALSE)
+
+# Lets save the new count data with gene information
+write.table(MergedData,file="TPM_GeneNames.txt",sep="\t",col.names = NA,quote = FALSE)
+
+# Selecting count data for protein coding genes. Using subset() function
+
+ProtCoding=subset(MergedData, gene_biotype=="protein_coding")
+
+ProtCoding$ID_Name = paste(ProtCoding$Ensembl_ID, ProtCoding$hgnc_symbol, sep = "_")
+
+# Now make the new column "ID_Name" as the row names and delete the unwanted "hgnc_symbol,gene_biotype,ensembl_gene_id".
+
+rownames(ProtCoding) = ProtCoding$ID_Name
+ProtCoding$Ensembl_ID = NULL
+ProtCoding$ID_Name = NULL
+ProtCoding$hgnc_symbol = NULL
+ProtCoding$gene_biotype = NULL
+
+# Lets have a look the final data frame.
+head(ProtCoding)
+
+# We are good to go. Lets save the final table too
+write.table(ProtCoding,file="ProtCodingTPM.txt",sep="\t",col.names = NA,quote = FALSE)
+```
+
+### TMM
+
+TMM (Trimmed Mean of M-values) normalization is a method used in RNA-seq data analysis to correct for compositional biases and differences in library sizes across samples. It works by calculating normalization factors based on the trimmed mean of log-ratios of gene expression between samples, which mitigates the impact of extreme values and outliers. This ensures that gene expression levels are comparable across samples, making TMM particularly effective for accurate differential expression analysis and reducing biases due to varying library compositions.
+
+Here also we are using function provided by R package `edgeR`
+
+```{r,eval=FALSE}
+library(edgeR)
+
+count=read.delim("ProtCodingCount.txt",row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+
+# Create a DGEList object
+dge <- DGEList(counts = countX)
+
+# Calculate normalization factors using TMM
+dge <- calcNormFactors(dge)
+
+# Get normalized counts
+TMM_counts <- cpm(dge, normalized.lib.sizes = TRUE)
+
+# Save the data to a file
+write.table(TMM_counts,file="TMM_ProtCodingCount.txt",sep="\t",quote = FALSE,col.names = NA)
+
+```
+
+### VST
+
+VST (Variance Stabilizing Transformation) normalization transforms RNA-seq data to stabilize variance across gene expression levels. By applying a log transformation and adjusting for variance, VST makes data more comparable and suitable for downstream analyses like PCA and clustering, reducing the impact of variability in low-count genes.
+
+We are using function provided by R package `DESeq2`
+
+```{r,eval=FALSE}
+library(DESeq2)
+
+count=read.delim("ProtCodingCount.txt",row.names = 1,check.names = FALSE)
+countX=as.matrix(count) # Converting the dataframe to matrix format.
+des=read.delim("Design.txt",row.names = 1)
+
+# Create a DESeqDataSet object
+dds <- DESeqDataSetFromMatrix(countData = countX, colData = des, design = ~ Group)
+
+# Perform VST normalization
+vsd <- vst(dds, blind = FALSE)
+
+# Access the VST transformed data
+VST_counts <- assay(vsd)
+
+write.table(VST_counts,file="VST_ProtCodingCount.txt",sep="\t",quote = FALSE,col.names = NA)
+
+```
+
+## Sample distribution
+
+Sample distribution estimation involves analyzing and summarizing the underlying distribution of data points within a dataset. Accurate estimation of sample distributions helps in identifying patterns, detecting outliers, and ensuring that the dimensionality reduction effectively captures the intrinsic relationships between data points. In PCA, it helps in determining the variance explained by each principal component, while in UMAP, it aids in preserving the local and global structure of the data during projection to lower dimensions. Proper distribution estimation enhances the reliability of these analyses by providing a clear picture of data spread and density.
+
+### PCA
+
+Principal Component Analysis (PCA) is a dimensionality reduction technique that transforms high-dimensional data into a lower-dimensional space while retaining the most variance. It identifies the principal components—orthogonal vectors that capture the maximum variance in the data. PCA simplifies the dataset by projecting it onto these principal components, making it easier to visualize and analyze complex data patterns.
+
+We use the R package `PCAtools`
+
+```{r,warning=FALSE,message=FALSE}
+library(PCAtools)
+
+# First let's use TPM data to create PCA
+TPMprot=read.delim("ProtCodingTPM.txt",row.names = 1,check.names = FALSE)
+Design=read.delim("Design.txt",row.names = 1)
+p <- PCAtools::pca((TPMprot), metadata = Design, removeVar = 0.1,scale = TRUE)
+
+# Check the percentage variance captured by each PCs. The sum of variances should be 100.
+as.data.frame(p$variance)
+
+# Since the first two PCs captured most of the variances in the data. It should be enough to access the sample distribution. We can plot the PC1 in x-axis and PC2 in the y-axis.
+PC_Cord=p$rotated
+PC_Cord$Group=Design$Group
+
+ggplot(PC_Cord, aes(x=PC1, y=PC2,colour = Group)) + geom_point(size=3)
+```
+
+### UMAP
+
+
+
+
+
+
+
 
 

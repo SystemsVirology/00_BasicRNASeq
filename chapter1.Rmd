@@ -158,6 +158,9 @@ If you use print(df), it will print all the rows in the data frame. If you simpl
 head(df)
 tail(df)
 head(df,5)
+```
+
+```{r,eval=FALSE}
 View(df)
 ```
 
@@ -316,7 +319,7 @@ So in order avoid file path problems, we will do all the file operations in a de
 
 First create a folder somewhere comfortable. For this tutorial I am creating a folder named **Tutorial** in desktop. Then I will define the folder **Tutorial** as our working directory.
 
-```{r}
+```{r,eval=FALSE}
 setwd("~/Desktop/Tutorial") # In linux
 #setwd("C:\Users\YourUsername\Desktop\Tutorial") # in Windows. You need to replace your username
 #setwd("/Users/YourUsername/Desktop/Tutorial") # in Mac
