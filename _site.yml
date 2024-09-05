@@ -7,7 +7,7 @@ navbar:
     - text: "Pre-course"
       href: preCourse.html
     - text: "System configuration"
-      href: chapter3.html
+      href: Configure.html
     - text: "Exercises"
       menu:
         - text: "Chapter 1"
@@ -15,7 +15,7 @@ navbar:
         - text: "Chapter 2"
           href: chapter2.html
     - text: "Assignment"
-      href: chapter3.html
+      href: Assignment.html
           
 output:
   html_document:

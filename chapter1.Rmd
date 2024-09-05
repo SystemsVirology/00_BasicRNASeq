@@ -662,3 +662,5 @@ ggplot(df, aes(x=weight))+
   geom_density(linetype="dashed")
 ```
 
+Note: If you need more colors, you can use the color-hex website. Just copy the hexcode of any color , `which starts with #` and use in the R code. The website link is [here](https://www.color-hex.com/)
+

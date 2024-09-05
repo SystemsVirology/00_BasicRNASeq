@@ -72,3 +72,10 @@ button {
 }
 /* styles.css */
 
+pre code {
+    color: black; /* Change to any color for code */
+    font-style: italic;
+}
+pre code span.hljs-comment {
+    font-style: italic;
+}

@@ -1,0 +1,39 @@
+---
+title: "Assignments"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: none
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here are some practical exercises for you to work on. The webpage will be updated with codes after the course weeks.
+
+### Exercise 1
+
+Make PCA plot using VST normalized data and compare it with PCA using TPM data. Write your inference.
+
+### Exercise 2
+
+Make UMAP using log2 CPM data and color the points based on BMI category and write your inference
+
+### Exercise 3
+
+Make a volcano plot with your own additional modifications
+
+### Exercise 4
+
+Perform gene-set enrichment results using any other gene-set and interpret the results
+
+### Exercise 5
+
+Make an another visualization of gene-set enrichment analysis results.
+
+
+
+
+
