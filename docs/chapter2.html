@@ -34,6 +34,17 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M3MJYFFV49"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M3MJYFFV49');
+</script>
+
+
 <style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
@@ -1077,8 +1088,8 @@ TPM=read.delim(&quot;ProtCodingTPM.txt&quot;,row.names = 1)
 # The row names are concatenation of Gene IDs and Gene Names. Let us split that into two columns, because we need fetch expression values based on our input gene names.
 
 TPM_split &lt;- do.call(rbind, strsplit(rownames(TPM), &quot;_&quot;))</code></pre>
-<pre><code>## Warning in (function (..., deparse.level = 1) : number of columns of result is not a multiple of vector length
-## (arg 1)</code></pre>
+<pre><code>## Warning in (function (..., deparse.level = 1) : number of columns of result is not a multiple of vector
+## length (arg 1)</code></pre>
 <pre class="r"><code>TPM$ID=TPM_split[, 1]
 TPM$GeneName=TPM_split[, 2]
 
@@ -1096,10 +1107,41 @@ GlycoGeneTPM$GeneName=NULL
 # Now GlycoGeneTPM has the data to make the heatmap.</code></pre>
 <p>Below is the code to make heatmap. We plot sample names on the
 columns and Gene names on rows of the heatmap.</p>
-<pre class="r"><code>library(circlize)
-library(ComplexHeatmap)
-
-# Define the color range
+<pre class="r"><code>library(circlize)</code></pre>
+<pre><code>## ========================================
+## circlize version 0.4.16
+## CRAN page: https://cran.r-project.org/package=circlize
+## Github page: https://github.com/jokergoo/circlize
+## Documentation: https://jokergoo.github.io/circlize_book/book/
+## 
+## If you use it in published research, please cite:
+## Gu, Z. circlize implements and enhances circular visualization
+##   in R. Bioinformatics 2014.
+## 
+## This message can be suppressed by:
+##   suppressPackageStartupMessages(library(circlize))
+## ========================================</code></pre>
+<pre class="r"><code>library(ComplexHeatmap)</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## ========================================
+## ComplexHeatmap version 2.20.0
+## Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/
+## Github page: https://github.com/jokergoo/ComplexHeatmap
+## Documentation: http://jokergoo.github.io/ComplexHeatmap-reference
+## 
+## If you use it in published research, please cite either one:
+## - Gu, Z. Complex Heatmap Visualization. iMeta 2022.
+## - Gu, Z. Complex heatmaps reveal patterns and correlations in multidimensional 
+##     genomic data. Bioinformatics 2016.
+## 
+## 
+## The new InteractiveComplexHeatmap package can directly export static 
+## complex heatmaps into an interactive Shiny app with zero effort. Have a try!
+## 
+## This message can be suppressed by:
+##   suppressPackageStartupMessages(library(ComplexHeatmap))
+## ========================================</code></pre>
+<pre class="r"><code># Define the color range
 col_tpm = colorRamp2(c(2,1,0.5,0,-0.5,-1,-2),c(&quot;#ffff19&quot;,&quot;#99990f&quot;,&quot;#4c4c07&quot;,&quot;white&quot;,&quot;#203470&quot;,&quot;#3454b4&quot;,&quot;#4169e1&quot;))
 
 # Here we are scaling the TPM values  using scale() function, so that the under expressed genes will be negative values and over expressed genes will be positive values. Once it is scaled it is called z-score.

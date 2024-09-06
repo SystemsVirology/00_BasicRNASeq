@@ -23,3 +23,5 @@ output:
     highlight: text
     css: styles.css
     code_folding: hide
+    includes:
+      in_header: header.html
